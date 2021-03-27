@@ -14,8 +14,6 @@ Page({
     deviceName: '',
     serviceId: '',
     characteristicId: '',
-    // 写入数据
-    writeData: 'aa811002105c260c0d000002105226290d0000'
   },
   // 事件处理函数
   bindViewTap: function() {
@@ -61,10 +59,13 @@ Page({
       allowDuplicatesKey: false,
       success: function (res) {
         // 搜索成功
-        console.log('已发现设备列表',res)
+        // console.log('已发现设备列表',res)
         wx.onBluetoothDeviceFound(res => {
-          // console.log(res.devices[0])
-          devices.push(res.devices[0])
+          // console.log(`lijianfei:${JSON.stringify(res)}`)
+          if (res.devices[0].name == 'yueweidianzi') {
+            console.log('已发现设备列表',res)
+            devices.push(res.devices[0])
+          }
           that.setData({
             devices: devices
             })
@@ -105,8 +106,8 @@ Page({
         wx.getBLEDeviceServices({
           deviceId: deviceId,
           success: (res) => {
-            // console.log('Service信息',res)
-            const serviceId = res.services[0].uuid;
+            console.log('Service信息',res)
+            const serviceId = res.services[1].uuid;
             console.log('serviceId', serviceId)
             that.setData({
               serviceId: serviceId,
@@ -116,7 +117,7 @@ Page({
               deviceId: deviceId,
               serviceId: serviceId,
               success: (res) => {
-                // console.log('Characteristic信息', res)
+                console.log('Characteristic信息', res)
                 const characteristicId = res.characteristics[0].uuid
                 console.log('characteristicId', characteristicId)
                 that.setData({
@@ -166,7 +167,7 @@ Page({
       deviceId: deviceId,
       serviceId: serviceId,
       characteristicId: characteristicId,
-      state: !isMonitoring,
+      state: true,
       success: res => {
         if (isMonitoring) {
           console.log('关闭监听成功', res)
@@ -174,16 +175,20 @@ Page({
           console.log('开启监听成功', res)
           // 监听低功耗蓝牙设备的特征值变化
           wx.onBLECharacteristicValueChange(res => {
-            const data = that.ab2hex(res.value)
-            console.log(data);
+            let wendu = that.buf2string(res.value).substr(0, 2)
+            let shidu =  that.buf2string(res.value).substr(2,2)
+            let adc =  that.buf2string(res.value).substr(4,6)
+            console.log(`温度：${wendu}`)
+            console.log(`湿度：${shidu}`)
+            console.log(`光敏：${adc}`)
           })
         };
         that.setData({
-          isMonitoring: !isMonitoring
+          isMonitoring: true
         })
       },
       fail: err => {
-        console.log('监听状态更新失败', res)
+        console.log('监听状态更新失败', err)
       }
     })
   },
@@ -199,33 +204,69 @@ Page({
         console.log(res)
       },
       fail: err => {
+        console.log(err)
       }
     })
   },
   write: function() {
-    // 写入蓝牙数据
-    const that = this
-    const { deviceId, serviceId, characteristicId, isMonitoring, writeData } = this.data
-    // 向蓝牙设备发送一个0x00的16进制数据
-    let buffer = new ArrayBuffer(1)
-    let dataView = new DataView(buffer)
-    dataView.setUint8(0, 0)
+    // // 写入蓝牙数据
+    // const that = this
+    // const { deviceId, serviceId, characteristicId, isMonitoring, writeData } = this.data
+    // let buffer = that.hexStringToArrayBuffer("11");
+    // console.log("buff is", buffer);
+    // console.log('deviceid='+deviceId)
+    // console.log('serviceId='+serviceId)
+    // console.log('characteristicId='+characteristicId)
+    // wx.writeBLECharacteristicValue({
+    //   deviceId: deviceId,
+    //   serviceId: serviceId,
+    //   characteristicId: characteristicId,
+    //   value: buffer,
+    //   success: res => {
+    //     console.log('writeBLECharacteristicValue success', res.errMsg)
+    //   },
+    //   fail: err => {
+    //     console.log(err)
+    //   }
+    // })
+    this.onred()
+  },
 
-    let msg = 'aa811002103024091a000002100f24eb190000'
-    let buf = this.hexStringToArrayBuffer(msg)
+  // 打开红灯
+  onred: function() {
+    var that = this
 
-    wx.writeBLECharacteristicValue({
-      deviceId: deviceId,
-      serviceId: serviceId,
-      characteristicId: characteristicId,
-      value: buf,
-      success: res => {
-        console.log('writeBLECharacteristicValue success', res.errMsg)
-      },
-      fail: err => {
-        console.log(err)
-      }
-    })
+    let buffer = that.hexStringToArrayBuffer("10");
+    console.log("buff is", buffer);
+    console.log('that.data = ', JSON.stringify(that.data))
+    if (that.data.isConnected) {
+      //写入数据
+      wx.writeBLECharacteristicValue({
+        deviceId: that.data.deviceId,
+        serviceId: that.data.serviceId,
+        characteristicId: that.data.characteristicId,
+        value: buffer,
+        success: function(res) {
+          console.log('发送成功')
+        },
+        fail: err => {
+          console.log(err)
+        }
+      })
+
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '蓝牙已断开',
+        showCancel: false,
+        success: function(res) {
+          that.setData({
+            searching: false
+          })
+        }
+      })
+    }
+
   },
 
   // ArrayBuffer转16进度字符串示例
@@ -270,5 +311,16 @@ Page({
       ind++
     }
     return buffer;
-  }
+  },
+  buf2hex: function (buffer) {
+    return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('')
+  },
+  buf2string: function (buffer) {
+    var arr = Array.prototype.map.call(new Uint8Array(buffer), x => x)
+    var str = ''
+    for (var i = 0; i < arr.length; i++) {
+      str += String.fromCharCode(arr[i])
+    }
+    return str
+  },
 })
