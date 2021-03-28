@@ -1,0 +1,22 @@
+{
+  "name": "wx-bluetooth-ble-demo",
+  "version": "1.0.0",
+  "description": "微信小程序蓝牙模块demo，可对蓝牙4.0 支持BLE的设备进行配对连接。",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lijianfeigeek/wx-bluetooth-ble-demo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lijianfeigeek/wx-bluetooth-ble-demo/issues"
+  },
+  "homepage": "https://github.com/lijianfeigeek/wx-bluetooth-ble-demo#readme",
+  "dependencies": {
+    "wux-weapp": "^3.8.7"
+  }
+}
