@@ -1,13 +1,8 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
-
   <!--未连接状态-->
   <scroll-view scroll-y wx:if="{{!isConnected}}">
-  <button class="base-button" bindtap="scan">{{scaning? '正在搜索中':'搜索蓝牙'}}</button>
-    <text class="baseinfo">当前可连接的设备</text>
+    <text class="baseinfo">当前可连接的设备：</text>
       <view 
       wx:for="{{devices}}" 
       wx:key="index"
@@ -20,6 +15,12 @@
         data-name="{{item.name}}"
         >{{item.deviceId}}</text>
     </view>
+    <button class="base-button" bindtap="scan">{{scaning? '正在搜索中':'搜索蓝牙'}}</button>
+    
+    <wux-button size="small">Button</wux-button>
+    <wux-button size="default">Button</wux-button>
+    <wux-button size="large">Button</wux-button>
+
   </scroll-view>
 <!--已连接状态-->
   <view wx:if="{{isConnected}}">
@@ -31,7 +32,14 @@
     <text class="blename">{{serviceId}}</text>
     <text class="blename">characteristicId:</text>
     <text class="blename">{{characteristicId}}</text>
-    <button bindtap="notify">{{isMonitoring? '关闭监听':'开启监听'}}</button>
+    <!-- <button bindtap="notify">{{isMonitoring? '关闭监听':'开启监听'}}</button> -->
+    <text class="blename">温度:</text>
+    <text class="blename">{{wendu}}</text>
+    <text class="blename">湿度:</text>
+    <text class="blename">{{shidu}}</text>
+    <text class="blename">光敏:</text>
+    <text class="blename">{{abs}}</text>
+    <input class="weui-input"  maxlength="10" bindinput="bindKeyInput" placeholder="输入同步到view中"/>
     <button bindtap="write">写入数据</button>
   </view>
 </view>

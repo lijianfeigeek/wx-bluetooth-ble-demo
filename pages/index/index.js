@@ -1,7 +1,5 @@
 //index.js
 //获取应用实例
-const app = getApp()
-// let deviceMap = new Map()
 Page({
   data: {
     motto: '蓝牙模块测试',
@@ -14,11 +12,20 @@ Page({
     deviceName: '',
     serviceId: '',
     characteristicId: '',
+    wendu:'',
+    shidu:'',
+    abs:'',
+    inputValue: ''
   },
   // 事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
       url: '../logs/logs'
+    })
+  },
+  bindKeyInput: function (e) {
+    this.setData({
+      inputValue: e.detail.value
     })
   },
   onLoad: () => {
@@ -123,6 +130,7 @@ Page({
                 that.setData({
                   characteristicId: characteristicId,
                 })
+                that.notify()
               },
               fail: err => {
                 console.log(err)
@@ -177,10 +185,12 @@ Page({
           wx.onBLECharacteristicValueChange(res => {
             let wendu = that.buf2string(res.value).substr(0, 2)
             let shidu =  that.buf2string(res.value).substr(2,2)
-            let adc =  that.buf2string(res.value).substr(4,6)
-            console.log(`温度：${wendu}`)
-            console.log(`湿度：${shidu}`)
-            console.log(`光敏：${adc}`)
+            let abs =  that.buf2string(res.value).substr(4,6)
+            that.setData({
+              wendu: wendu,
+              shidu:shidu,
+              abs:abs,
+            })
           })
         };
         that.setData({
@@ -188,6 +198,9 @@ Page({
         })
       },
       fail: err => {
+        that.setData({
+          isMonitoring: false
+        })
         console.log('监听状态更新失败', err)
       }
     })
@@ -229,16 +242,21 @@ Page({
     //     console.log(err)
     //   }
     // })
-    this.onred()
+    let {inputValue} = this.data
+    this.onred(inputValue)
   },
 
   // 打开红灯
-  onred: function() {
+  onred: function(e) {
     var that = this
 
-    let buffer = that.hexStringToArrayBuffer("10");
+    // let buffer = that.hexStringToArrayBuffer(e);
+    let buffer = new ArrayBuffer(6)
+    let dataView = new DataView(buffer)
+    dataView.setUint8(4, 187)
+    dataView.setUint8(5, 50)
+
     console.log("buff is", buffer);
-    console.log('that.data = ', JSON.stringify(that.data))
     if (that.data.isConnected) {
       //写入数据
       wx.writeBLECharacteristicValue({
