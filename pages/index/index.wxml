@@ -1,8 +1,8 @@
 <!--index.wxml-->
 <view class="container">
   <!--未连接状态-->
-  <scroll-view scroll-y wx:if="{{!isConnected}}">
-    <text class="baseinfo">当前可连接的设备：</text>
+  <scroll-view class="view-wrapper" scroll-y wx:if="{{!isConnected}}">
+    <!-- <text class="baseinfo">当前可连接的设备：</text>
       <view 
       wx:for="{{devices}}" 
       wx:key="index"
@@ -14,13 +14,8 @@
         data-id="{{item.deviceId}}"
         data-name="{{item.name}}"
         >{{item.deviceId}}</text>
-    </view>
-    <button class="base-button" bindtap="scan">{{scaning? '正在搜索中':'搜索蓝牙'}}</button>
-    
-    <wux-button size="small">Button</wux-button>
-    <wux-button size="default">Button</wux-button>
-    <wux-button size="large">Button</wux-button>
-
+    </view> -->
+    <!-- <button class="base-button" bindtap="scan">{{scaning? '正在搜索中':'搜索蓝牙'}}</button> -->
   </scroll-view>
 <!--已连接状态-->
   <view wx:if="{{isConnected}}">
