@@ -3,8 +3,5 @@
   "navigationBarTextStyle": "black",
   "navigationBarTitleText": "美啦啦按摩仪",
   "backgroundColor": "#eeeeee",
-  "backgroundTextStyle": "light",
-  "usingComponents": {
-    "wux-button": "../../miniprogram_npm/wux-weapp/button/index"
-  }
+  "backgroundTextStyle": "light"
 }

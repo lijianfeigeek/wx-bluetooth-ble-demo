@@ -16,14 +16,14 @@
     "list": [{
         "pagePath": "pages/index/index",
         "text": "功能选择",
-        "iconPath": "images/function.png",
-        "selectedIconPath": "images/function_HL.png"
+        "iconPath": "images/tabbarImage/1.png",
+        "selectedIconPath": "images/tabbarImage/1-1.png"
       },
       {
         "pagePath": "pages/logs/logs",
         "text": "小贴士",
-        "iconPath": "images/tips.png",
-        "selectedIconPath": "images/tips_HL.png"
+        "iconPath": "images/tabbarImage/2.png",
+        "selectedIconPath": "images/tabbarImage/2-2.png"
       }
     ]
   }

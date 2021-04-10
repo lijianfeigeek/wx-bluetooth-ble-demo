@@ -1,40 +1,17 @@
 <!--index.wxml-->
-<view class="container">
-  <!--未连接状态-->
-  <scroll-view class="view-wrapper" scroll-y wx:if="{{!isConnected}}">
-    <!-- <text class="baseinfo">当前可连接的设备：</text>
-      <view 
-      wx:for="{{devices}}" 
-      wx:key="index"
-      class="device"
-      >
-        <text class="blename">{{item.name}}</text>
-        <text class="bleid"
-        bindtap="connect"
-        data-id="{{item.deviceId}}"
-        data-name="{{item.name}}"
-        >{{item.deviceId}}</text>
-    </view> -->
-    <!-- <button class="base-button" bindtap="scan">{{scaning? '正在搜索中':'搜索蓝牙'}}</button> -->
+<view>
+  <scroll-view class="view" scroll-y="ture">
+    <view class="viewNaviBar"></view>
+    <text class="title-text">—— 5大模式选择 ——</text>
+    <view class="view4func">
+      <image class="imageFunc1" src="../../images/4modeImage/1.png"></image>
+      <image class="imageFunc2" src="../../images/4modeImage/2.png"></image>
+      <image class="imageFunc3" src="../../images/4modeImage/3.png"></image>
+      <image class="imageFunc4" src="../../images/4modeImage/4.png"></image>
+    </view>
+    <view style="height:600px;">
+
+    </view>
+
   </scroll-view>
-<!--已连接状态-->
-  <view wx:if="{{isConnected}}">
-    <button bindtap="disconnect" data-id="{{deviceId}}">断开连接</button>
-    <text class="baseinfo">当前已连接的设备信息</text>
-    <text class="blename">{{deviceName}}</text>
-    <text class="bleid">{{deviceId}}</text>
-    <text class="blename">serviceId:</text>
-    <text class="blename">{{serviceId}}</text>
-    <text class="blename">characteristicId:</text>
-    <text class="blename">{{characteristicId}}</text>
-    <!-- <button bindtap="notify">{{isMonitoring? '关闭监听':'开启监听'}}</button> -->
-    <text class="blename">温度:</text>
-    <text class="blename">{{wendu}}</text>
-    <text class="blename">湿度:</text>
-    <text class="blename">{{shidu}}</text>
-    <text class="blename">光敏:</text>
-    <text class="blename">{{abs}}</text>
-    <input class="weui-input"  maxlength="10" bindinput="bindKeyInput" placeholder="输入同步到view中"/>
-    <button bindtap="write">写入数据</button>
-  </view>
 </view>

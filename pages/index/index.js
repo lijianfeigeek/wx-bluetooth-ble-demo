@@ -2,58 +2,34 @@
 //获取应用实例
 Page({
   data: {
-    motto: '蓝牙模块测试',
-    devices:[],
-    scaning: false,
-    isConnected: false,   // 是否正在连接
-    isMonitoring: false,  // 是否正在监听
-    // 已连接设备信息
-    deviceId: '',
-    deviceName: '',
-    serviceId: '',
-    characteristicId: '',
-    wendu:'',
-    shidu:'',
-    abs:'',
-    inputValue: ''
-  },
-  // 事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  bindKeyInput: function (e) {
-    this.setData({
-      inputValue: e.detail.value
-    })
+    
   },
   onLoad: () => {
     // 自动初始化蓝牙模块
-    let that = this;
-    wx.showLoading({
-      title: '开启蓝牙适配'
-    });
-    setTimeout(function () {
-      wx.hideLoading()
-    }, 2000)
-    wx.openBluetoothAdapter({
-      success: (res) =>  {
-        console.log("初始化蓝牙适配器");
-        // console.log(res);
-      },
-      fail: (err) => {
-        console.log(err);
-        wx.showToast({
-          title: '蓝牙初始化失败',
-          icon: 'success',
-          duration: 2000
-        })
-        setTimeout(function () {
-          wx.hideToast()
-        }, 2000)
-      }
-    });
+    // let that = this;
+    // wx.showLoading({
+    //   title: '开启蓝牙适配'
+    // });
+    // setTimeout(function () {
+    //   wx.hideLoading()
+    // }, 2000)
+    // wx.openBluetoothAdapter({
+    //   success: (res) =>  {
+    //     console.log("初始化蓝牙适配器");
+    //     // console.log(res);
+    //   },
+    //   fail: (err) => {
+    //     console.log(err);
+    //     wx.showToast({
+    //       title: '蓝牙初始化失败',
+    //       icon: 'success',
+    //       duration: 2000
+    //     })
+    //     setTimeout(function () {
+    //       wx.hideToast()
+    //     }, 2000)
+    //   }
+    // });
   },
   scan: function () {
     let that = this
