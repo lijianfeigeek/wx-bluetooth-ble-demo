@@ -1,82 +1,166 @@
 //index.js
 //获取应用实例
+var gearBase64 = require('./gearBase64')
 Page({
   data: {
-    
+    func1_selected: false,
+    func1_image: "../../images/4modeImage/1.png",
+    func1_image_HL: "../../images/4modeImage/1-1.png",
+    func2_selected: false,
+    func2_image: "../../images/4modeImage/2.png",
+    func2_image_HL: "../../images/4modeImage/2-2.png",
+    func3_selected: false,
+    func3_image: "../../images/4modeImage/3.png",
+    func3_image_HL: "../../images/4modeImage/3-3.png",
+    func4_selected: false,
+    func4_image: "../../images/4modeImage/4.png",
+    func4_image_HL: "../../images/4modeImage/4-4.png",
+    gear:0,
+    gearImageNow: gearBase64.gear[0]
   },
+  // 交互事件函数
+  func1: function () {
+    this.setData({
+      func1_selected: !this.data.func1_selected,
+      func2_selected: false,
+      func3_selected: false,
+      func4_selected: false
+    })
+    this.logMode()
+  },
+  func2: function () {
+    this.setData({
+      func1_selected: false,
+      func2_selected: !this.data.func2_selected,
+      func3_selected: false,
+      func4_selected: false
+    })
+    this.logMode()
+  },
+  func3: function () {
+    this.setData({
+      func1_selected: false,
+      func2_selected: false,
+      func3_selected: !this.data.func3_selected,
+      func4_selected: false
+    })
+    this.logMode()
+  },
+  func4: function () {
+    this.setData({
+      func1_selected: false,
+      func2_selected: false,
+      func3_selected: false,
+      func4_selected: !this.data.func4_selected
+    })
+    this.logMode()
+  },
+  // 四种模式输出
+  logMode: function () {
+    console.log('活力模式是否打开' + this.data.func1_selected)
+    console.log('轻享模式是否打开' + this.data.func2_selected)
+    console.log('敲打模式是否打开' + this.data.func3_selected)
+    console.log('舒缓模式是否打开' + this.data.func4_selected)
+  },
+
+  gearAdd:function () {
+    let gear = this.data.gear
+    if (gear<9) {
+      gear++
+      this.setData({
+        gear:gear,
+        gearImageNow:gearBase64.gear[gear]
+      })
+    }
+  },
+  gearSub:function () {
+    let gear = this.data.gear
+    if (gear>0) {
+      gear--
+      this.setData({
+        gear:gear,
+        gearImageNow:gearBase64.gear[gear]
+      })
+    }
+  },
+
+  // 生命周期函数
   onLoad: () => {
+
+  },
+  initBlue: () => {
     // 自动初始化蓝牙模块
-    // let that = this;
-    // wx.showLoading({
-    //   title: '开启蓝牙适配'
-    // });
-    // setTimeout(function () {
-    //   wx.hideLoading()
-    // }, 2000)
-    // wx.openBluetoothAdapter({
-    //   success: (res) =>  {
-    //     console.log("初始化蓝牙适配器");
-    //     // console.log(res);
-    //   },
-    //   fail: (err) => {
-    //     console.log(err);
-    //     wx.showToast({
-    //       title: '蓝牙初始化失败',
-    //       icon: 'success',
-    //       duration: 2000
-    //     })
-    //     setTimeout(function () {
-    //       wx.hideToast()
-    //     }, 2000)
-    //   }
-    // });
+    let that = this;
+    wx.showLoading({
+      title: '开启蓝牙适配'
+    });
+    setTimeout(function () {
+      wx.hideLoading()
+    }, 2000)
+    wx.openBluetoothAdapter({
+      success: (res) => {
+        console.log("初始化蓝牙适配器");
+        // console.log(res);
+      },
+      fail: (err) => {
+        console.log(err);
+        wx.showToast({
+          title: '蓝牙初始化失败',
+          icon: 'success',
+          duration: 2000
+        })
+        setTimeout(function () {
+          wx.hideToast()
+        }, 2000)
+      }
+    });
   },
   scan: function () {
     let that = this
     let devices = []
     this.setData({
-      scaning: true,
-    }),
-    wx.startBluetoothDevicesDiscovery({
-      services: [],
-      allowDuplicatesKey: false,
-      success: function (res) {
-        // 搜索成功
-        // console.log('已发现设备列表',res)
-        wx.onBluetoothDeviceFound(res => {
-          // console.log(`lijianfei:${JSON.stringify(res)}`)
-          if (res.devices[0].name == 'yueweidianzi') {
-            console.log('已发现设备列表',res)
-            devices.push(res.devices[0])
-          }
-          that.setData({
-            devices: devices
+        scaning: true,
+      }),
+      wx.startBluetoothDevicesDiscovery({
+        services: [],
+        allowDuplicatesKey: false,
+        success: function (res) {
+          // 搜索成功
+          // console.log('已发现设备列表',res)
+          wx.onBluetoothDeviceFound(res => {
+            // console.log(`lijianfei:${JSON.stringify(res)}`)
+            if (res.devices[0].name == 'yueweidianzi') {
+              console.log('已发现设备列表', res)
+              devices.push(res.devices[0])
+            }
+            that.setData({
+              devices: devices
             })
           })
-      },
-      fail: function (err) {
-        console.log('搜索失败',err);
-      },
-      complete: () => {
-        // 停止搜索
-        setTimeout(function(){
-          wx.stopBluetoothDevicesDiscovery()
-          that.setData({
-            scaning: false,
-          })
-        }, 3000)
-      }
-    });
+        },
+        fail: function (err) {
+          console.log('搜索失败', err);
+        },
+        complete: () => {
+          // 停止搜索
+          setTimeout(function () {
+            wx.stopBluetoothDevicesDiscovery()
+            that.setData({
+              scaning: false,
+            })
+          }, 3000)
+        }
+      });
   },
-  connect: function(e) {
+  connect: function (e) {
     // 连接设备
     let that = this
     let deviceId = e.currentTarget.dataset.id
     let deviceName = e.currentTarget.dataset.name
-    console.log('deviceId',deviceId)
+    console.log('deviceId', deviceId)
     wx.createBLEConnection({
       deviceId: deviceId,
-      success:(res) => {
+      success: (res) => {
         console.log('设备已连接成功')
         console.log(res)
         // 连接成功
@@ -89,7 +173,7 @@ Page({
         wx.getBLEDeviceServices({
           deviceId: deviceId,
           success: (res) => {
-            console.log('Service信息',res)
+            console.log('Service信息', res)
             const serviceId = res.services[1].uuid;
             console.log('serviceId', serviceId)
             that.setData({
@@ -142,10 +226,15 @@ Page({
       }
     })
   },
-  notify: function() {
+  notify: function () {
     // 更改通知监听
     const that = this
-    const { deviceId, serviceId, characteristicId, isMonitoring} = this.data
+    const {
+      deviceId,
+      serviceId,
+      characteristicId,
+      isMonitoring
+    } = this.data
     // console.log(this.data)
     wx.notifyBLECharacteristicValueChange({
       deviceId: deviceId,
@@ -160,12 +249,12 @@ Page({
           // 监听低功耗蓝牙设备的特征值变化
           wx.onBLECharacteristicValueChange(res => {
             let wendu = that.buf2string(res.value).substr(0, 2)
-            let shidu =  that.buf2string(res.value).substr(2,2)
-            let abs =  that.buf2string(res.value).substr(4,6)
+            let shidu = that.buf2string(res.value).substr(2, 2)
+            let abs = that.buf2string(res.value).substr(4, 6)
             that.setData({
               wendu: wendu,
-              shidu:shidu,
-              abs:abs,
+              shidu: shidu,
+              abs: abs,
             })
           })
         };
@@ -181,10 +270,15 @@ Page({
       }
     })
   },
-  read: function() {
+  read: function () {
     // 读取蓝牙数据
     const that = this
-    const { deviceId, serviceId, characteristicId, isMonitoring } = this.data
+    const {
+      deviceId,
+      serviceId,
+      characteristicId,
+      isMonitoring
+    } = this.data
     wx.readBLECharacteristicValue({
       deviceId: deviceId,
       serviceId: serviceId,
@@ -197,7 +291,7 @@ Page({
       }
     })
   },
-  write: function() {
+  write: function () {
     // // 写入蓝牙数据
     // const that = this
     // const { deviceId, serviceId, characteristicId, isMonitoring, writeData } = this.data
@@ -218,12 +312,14 @@ Page({
     //     console.log(err)
     //   }
     // })
-    let {inputValue} = this.data
+    let {
+      inputValue
+    } = this.data
     this.onred(inputValue)
   },
 
   // 打开红灯
-  onred: function(e) {
+  onred: function (e) {
     var that = this
 
     // let buffer = that.hexStringToArrayBuffer(e);
@@ -240,7 +336,7 @@ Page({
         serviceId: that.data.serviceId,
         characteristicId: that.data.characteristicId,
         value: buffer,
-        success: function(res) {
+        success: function (res) {
           console.log('发送成功')
         },
         fail: err => {
@@ -253,7 +349,7 @@ Page({
         title: '提示',
         content: '蓝牙已断开',
         showCancel: false,
-        success: function(res) {
+        success: function (res) {
           that.setData({
             searching: false
           })
@@ -290,7 +386,7 @@ Page({
 
     return hexStr.toUpperCase();
   },
-  hexStringToArrayBuffer: function(str) {
+  hexStringToArrayBuffer: function (str) {
     if (!str) {
       return new ArrayBuffer(0);
     }

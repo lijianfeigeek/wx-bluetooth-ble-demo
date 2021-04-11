@@ -4,14 +4,22 @@
     <view class="viewNaviBar"></view>
     <text class="title-text">—— 5大模式选择 ——</text>
     <view class="view4func">
-      <image class="imageFunc1" src="../../images/4modeImage/1.png"></image>
-      <image class="imageFunc2" src="../../images/4modeImage/2.png"></image>
-      <image class="imageFunc3" src="../../images/4modeImage/3.png"></image>
-      <image class="imageFunc4" src="../../images/4modeImage/4.png"></image>
+      <image class="imageFunc1" bindtap="func1" src="{{func1_selected?func1_image_HL:func1_image}}"></image>
+      <image class="imageFunc2" bindtap="func2" src="{{func2_selected?func2_image_HL:func2_image}}"></image>
+      <image class="imageFunc3" bindtap="func3" src="{{func3_selected?func3_image_HL:func3_image}}"></image>
+      <image class="imageFunc4" bindtap="func4" src="{{func4_selected?func4_image_HL:func4_image}}"></image>
     </view>
-    <view style="height:600px;">
+    <view style="height:100px;">
+      <!-- 预留位置 -->
+    </view>
+    <text class="title-text">9档档位调节</text>
+    <view class="imageGearView">
+      <view class="imageGear" style="background-repeat: no-repeat; background-size: 100% 100%; background-image: url('{{gearImageNow}}');">
+          <image class="gearSubBtn" bindtap="gearSub" src="../../images/9gearImage/sub.png" ></image>
+          <image class="gearAddBtn" bindtap="gearAdd" src="../../images/9gearImage/add.png" ></image>
+      </view>
+    </view>
 
-    </view>
 
   </scroll-view>
 </view>
