@@ -16,7 +16,10 @@ Page({
     func4_image: "../../images/4modeImage/4.png",
     func4_image_HL: "../../images/4modeImage/4-4.png",
     gear:0,
-    gearImageNow: gearBase64.gear[0]
+    gearImageNow: gearBase64.gear[0],
+    buleConnect:false,
+    bule_image:'../../images/buleImage/1.png',
+    bule_image_HL:'../../images/buleImage/1-1.png'
   },
   // 交互事件函数
   func1: function () {
@@ -82,6 +85,12 @@ Page({
         gearImageNow:gearBase64.gear[gear]
       })
     }
+  },
+
+  setBuleConnet:function(){
+    // this.setData({
+    //   buleConnect:!this.data.buleConnect
+    // })
   },
 
   // 生命周期函数

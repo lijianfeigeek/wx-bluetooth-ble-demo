@@ -1,13 +1,13 @@
-var gear0 = require('./gear/gear0');
-var gear1 = require('./gear/gear1');
-var gear2 = require('./gear/gear2');
-var gear3 = require('./gear/gear3');
-var gear4 = require('./gear/gear4');
-var gear5 = require('./gear/gear5');
-var gear6 = require('./gear/gear6');
-var gear7 = require('./gear/gear7');
-var gear8 = require('./gear/gear8');
-var gear9 = require('./gear/gear9');
+var gear0 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_0.png'
+var gear1 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_1.png'
+var gear2 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_2.png'
+var gear3 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_3.png'
+var gear4 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_4.png'
+var gear5 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_5.png'
+var gear6 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_6.png'
+var gear7 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_7.png'
+var gear8 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_8.png'
+var gear9 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_9.png'
 module.exports = {
   gear:[
     gear0,

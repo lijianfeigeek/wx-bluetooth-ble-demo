@@ -80,7 +80,64 @@
   margin-left:10px;
 }
 
+.powerAndBuleView {
+  width:100vw;
+  height:150px;
+  display:flex; 
+  flex-direction:row;
+  justify-content:center;
+  align-items:center;
+  /* background-color: green; */
+}
 
+.powerAndBuleInView {
+  width:95vw;
+  height:120px;
+  display:flex; 
+  align-self:center;
+  border-radius: 10px;
+  flex-direction:row;
+  background-color: white;
+}
+.powerView {
+  width:55vw;
+  height:100px;
+  display:flex; 
+  flex-direction:column;
+  border-radius: 10px;
+  background-color:#edf7fe;
+  margin: 10px;
+}
+.powerTitle {
+  font-size: 20px;
+  margin-top: 5px;
+  align-self:center;
+
+}
+.power {
+  align-self:center;
+  font-size: 40px;
+}
+.buleView {
+  width:35vw;
+  height:100px;
+  display:flex; 
+  flex-direction:column;
+  border-radius: 10px;
+  background-color: #edf7fe;
+  margin: 10px;
+}
+.buleTitle {
+  align-self:center;
+  font-size: 20px;
+  margin-top: 5px;
+}
+.buleImage {
+  width: 41px;
+  height: 41px;
+  align-self:center;
+  margin-top:10px;
+}
 
 .view {
   height:100%;
