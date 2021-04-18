@@ -1,6 +1,7 @@
 //index.js
 //获取应用实例
 var gearBase64 = require('./gearBase64')
+var hotArray = require('./hotImage')
 Page({
   data: {
     func1_selected: false,
@@ -15,6 +16,11 @@ Page({
     func4_selected: false,
     func4_image: "../../images/4modeImage/4.png",
     func4_image_HL: "../../images/4modeImage/4-4.png",
+    func5_selected: false,
+    func5_image: "../../images/hotModeImage/hot.png",
+    func5_image_HL: "../../images/hotModeImage/hot_1.png",
+    hot:0,
+    hotImageNow:hotArray.hot[0],
     gear:0,
     gearImageNow: gearBase64.gear[0],
     buleConnect:false,
@@ -58,6 +64,54 @@ Page({
     })
     this.logMode()
   },
+  func5: function () {
+    let hot = this.data.hot
+    hot = 0
+    this.setData({
+      func5_selected: !this.data.func5_selected,
+      hot:hot,
+      hotImageNow:hotArray.hot[hot]
+    })
+  },
+  hotSub:function(){
+    if(this.data.func5_selected == true){
+      let hot = this.data.hot
+      if (hot>0) {
+        hot--
+        this.setData({
+          hot:hot,
+          hotImageNow:hotArray.hot[hot]
+        })
+      }
+    }
+    else{
+      wx.showToast({
+        title: '请打开热敷模式',
+        icon: 'error',
+        duration: 2000
+      })
+      
+    }
+  },
+  hotAdd:function(){
+    if(this.data.func5_selected == true){
+      let hot = this.data.hot
+      if (hot<3) {
+        hot++
+        this.setData({
+          hot:hot,
+          hotImageNow:hotArray.hot[hot]
+        })
+      }
+    }
+    else{
+      wx.showToast({
+        title: '请打开热敷模式',
+        icon: 'error',
+        duration: 2000
+      })
+    }
+  },
   // 四种模式输出
   logMode: function () {
     console.log('活力模式是否打开' + this.data.func1_selected)
@@ -94,7 +148,7 @@ Page({
   },
 
   // 生命周期函数
-  onLoad: () => {
+  onLoad: function(){
 
   },
   initBlue: () => {

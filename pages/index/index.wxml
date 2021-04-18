@@ -2,17 +2,28 @@
 <view>
   <scroll-view class="view" scroll-y="ture">
     <view class="viewNaviBar"></view>
-    <text class="title-text">—— 5大模式选择 ——</text>
+    <view class="titleView">
+      <image class="titleImage" src="../../images/titleImage/5ModeTitle.png"></image>
+    </view>
     <view class="view4func">
       <image class="imageFunc1" bindtap="func1" src="{{func1_selected?func1_image_HL:func1_image}}"></image>
       <image class="imageFunc2" bindtap="func2" src="{{func2_selected?func2_image_HL:func2_image}}"></image>
       <image class="imageFunc3" bindtap="func3" src="{{func3_selected?func3_image_HL:func3_image}}"></image>
       <image class="imageFunc4" bindtap="func4" src="{{func4_selected?func4_image_HL:func4_image}}"></image>
     </view>
-    <view style="height:100px;">
-      <!-- 预留位置 -->
+    <view class="hotView">
+      <view class="hotViewRow_1">
+        <image class="addSubBtn" bindtap="hotSub" src="../../images/9gearImage/sub.png" ></image>
+        <image class="imageFunc5" bindtap="func5" src="{{func5_selected?func5_image_HL:func5_image}}"></image>
+        <image class="hotSubBtn" bindtap="hotAdd" src="../../images/9gearImage/add.png" ></image>
+      </view>
+      <view class="hotViewRow_2">
+        <image class="hotGearImage" src="{{hotImageNow}}"></image>
+      </view>
+     </view>
+    <view class="titleView">
+      <image class="subTitleImage" src="../../images/titleImage/9gearTitle.png"></image>
     </view>
-    <text class="title-text">—— 9档档位调节 ——</text>
     <view class="imageGearView">
       <view class="imageGear" style="background-repeat: no-repeat; background-size: 100% 100%; background-image: url('{{gearImageNow}}');">
           <image class="gearSubBtn" bindtap="gearSub" src="../../images/9gearImage/sub.png" ></image>

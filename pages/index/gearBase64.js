@@ -1,4 +1,4 @@
-var gear0 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_0.png'
+var gear0 = 'http://qiniu.lijianfei.com/uPic/bule_meilala0_1.png'
 var gear1 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_1.png'
 var gear2 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_2.png'
 var gear3 = 'http://qiniu.lijianfei.com/uPic/bule_meilala_3.png'
