@@ -43,4 +43,11 @@
       </view>
     </view>
   </scroll-view>
+  <action-sheet hidden="{{!scaning}}" bindchange="actionSheetChange">
+    <!-- <action-sheet-item class="item">搜到到的蓝牙设备</action-sheet-item> -->
+  <block wx:for="{{devices}}">
+    <action-sheet-item class="item" bindtap="bindItemTap" data-name="{{item}}">{{item.name}}</action-sheet-item>
+  </block>
+  <action-sheet-cancel class="cancel" bindtap="actionSheetCancel" >取消</action-sheet-cancel>
+</action-sheet>
 </view>

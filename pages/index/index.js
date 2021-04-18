@@ -25,7 +25,9 @@ Page({
     gearImageNow: gearBase64.gear[0],
     buleConnect:false,
     bule_image:'../../images/buleImage/1.png',
-    bule_image_HL:'../../images/buleImage/1-1.png'
+    bule_image_HL:'../../images/buleImage/1-1.png',
+    scaning: false,
+    devices:[]
   },
   // 交互事件函数
   func1: function () {
@@ -142,16 +144,25 @@ Page({
   },
 
   setBuleConnet:function(){
-    // this.setData({
-    //   buleConnect:!this.data.buleConnect
-    // })
+    this.initBlue()
   },
 
   // 生命周期函数
   onLoad: function(){
 
   },
-  initBlue: () => {
+
+  actionSheetChange:function(){
+
+  },
+
+  actionSheetCancel:function(){
+    this.setData({
+      scaning:false
+    })
+  },
+
+  initBlue: function() {
     // 自动初始化蓝牙模块
     let that = this;
     wx.showLoading({
@@ -162,14 +173,19 @@ Page({
     }, 2000)
     wx.openBluetoothAdapter({
       success: (res) => {
-        console.log("初始化蓝牙适配器");
-        // console.log(res);
+        console.log("初始化蓝牙适配器成功");
+        // wx.showToast({
+        //   title: '初始化蓝牙适配器成功',
+        //   icon: 'success',
+        //   duration: 2000
+        // })
+        that.scan();
       },
       fail: (err) => {
         console.log(err);
         wx.showToast({
           title: '蓝牙初始化失败',
-          icon: 'success',
+          icon: 'error',
           duration: 2000
         })
         setTimeout(function () {
@@ -179,6 +195,7 @@ Page({
     });
   },
   scan: function () {
+    console.log('scaning')
     let that = this
     let devices = []
     this.setData({
@@ -191,6 +208,11 @@ Page({
           // 搜索成功
           // console.log('已发现设备列表',res)
           wx.onBluetoothDeviceFound(res => {
+            // console.log(res.devices[0].name)
+            // if(res.devices[0].name.length>0){
+            //   console.log(res.devices[0])
+            //   devices.push(res.devices[0])
+            // }
             // console.log(`lijianfei:${JSON.stringify(res)}`)
             if (res.devices[0].name == 'yueweidianzi') {
               console.log('已发现设备列表', res)
@@ -203,14 +225,19 @@ Page({
         },
         fail: function (err) {
           console.log('搜索失败', err);
+          wx.showToast({
+            title: '蓝牙搜索失败',
+            icon: 'error',
+            duration: 2000
+          })
         },
         complete: () => {
           // 停止搜索
           setTimeout(function () {
             wx.stopBluetoothDevicesDiscovery()
-            that.setData({
-              scaning: false,
-            })
+            // that.setData({
+            //   scaning: false,
+            // })
           }, 3000)
         }
       });
