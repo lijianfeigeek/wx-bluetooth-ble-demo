@@ -23,11 +23,17 @@ Page({
     hotImageNow:hotArray.hot[0],
     gear:0,
     gearImageNow: gearBase64.gear[0],
-    buleConnect:false,
+    isConnected:false,
     bule_image:'../../images/buleImage/1.png',
     bule_image_HL:'../../images/buleImage/1-1.png',
     scaning: false,
-    devices:[]
+    devices:[],
+    deviceId:null,
+    deviceName:null,
+    serviceId:null,
+    characteristicId_sender:null,
+    characteristicId_notify:null,
+    isMonitoring:false
   },
   // 交互事件函数
   func1: function () {
@@ -152,6 +158,10 @@ Page({
 
   },
 
+  bindItemTap:function(e){
+    this.connect(e)
+  },
+
   actionSheetChange:function(){
 
   },
@@ -208,13 +218,8 @@ Page({
           // 搜索成功
           // console.log('已发现设备列表',res)
           wx.onBluetoothDeviceFound(res => {
-            // console.log(res.devices[0].name)
-            // if(res.devices[0].name.length>0){
-            //   console.log(res.devices[0])
-            //   devices.push(res.devices[0])
-            // }
             // console.log(`lijianfei:${JSON.stringify(res)}`)
-            if (res.devices[0].name == 'yueweidianzi') {
+            if (res.devices[0].name == 'AMY_000003') {
               console.log('已发现设备列表', res)
               devices.push(res.devices[0])
             }
@@ -243,10 +248,11 @@ Page({
       });
   },
   connect: function (e) {
+    console.log(e)
     // 连接设备
     let that = this
-    let deviceId = e.currentTarget.dataset.id
-    let deviceName = e.currentTarget.dataset.name
+    let deviceId = e.currentTarget.dataset.name.deviceId
+    let deviceName = e.currentTarget.dataset.name.name
     console.log('deviceId', deviceId)
     wx.createBLEConnection({
       deviceId: deviceId,
@@ -258,6 +264,7 @@ Page({
           isConnected: true,
           deviceId: deviceId,
           deviceName: deviceName,
+          scaning:false
         })
         // 获取设备Service信息
         wx.getBLEDeviceServices({
@@ -275,10 +282,13 @@ Page({
               serviceId: serviceId,
               success: (res) => {
                 console.log('Characteristic信息', res)
-                const characteristicId = res.characteristics[0].uuid
-                console.log('characteristicId', characteristicId)
+                const characteristicId_sender = res.characteristics[0].uuid
+                const characteristicId_notify = res.characteristics[1].uuid
+                console.log('characteristicId_sender', characteristicId_sender)
+                console.log('characteristicId_notify', characteristicId_notify)
                 that.setData({
-                  characteristicId: characteristicId,
+                  characteristicId_sender: characteristicId_sender,
+                  characteristicId_notify: characteristicId_notify
                 })
                 that.notify()
               },
@@ -322,14 +332,14 @@ Page({
     const {
       deviceId,
       serviceId,
-      characteristicId,
+      characteristicId_notify,
       isMonitoring
     } = this.data
     // console.log(this.data)
     wx.notifyBLECharacteristicValueChange({
       deviceId: deviceId,
       serviceId: serviceId,
-      characteristicId: characteristicId,
+      characteristicId: characteristicId_notify,
       state: true,
       success: res => {
         if (isMonitoring) {

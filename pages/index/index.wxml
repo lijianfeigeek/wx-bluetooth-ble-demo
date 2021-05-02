@@ -38,7 +38,7 @@
         </view>
         <view class="buleView" >
           <text class="buleTitle">蓝牙连接</text>
-          <image class="buleImage" bindtap="setBuleConnet" src="{{buleConnect?bule_image_HL:bule_image}}"></image>
+          <image class="buleImage" bindtap="setBuleConnet" src="{{isConnected?bule_image_HL:bule_image}}"></image>
         </view>
       </view>
     </view>
