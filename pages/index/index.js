@@ -149,8 +149,16 @@ Page({
     }
   },
 
-  setBuleConnet:function(){
-    this.initBlue()
+  setBuleConnet:function(e){
+    const {
+      isConnected
+    } = this.data
+
+    if (isConnected) {
+      this.disconnect(e)
+    } else {
+      this.initBlue()
+    }
   },
 
   // 生命周期函数
@@ -266,6 +274,11 @@ Page({
           deviceName: deviceName,
           scaning:false
         })
+        wx.showToast({
+          title: '设备已连接',
+          icon: 'success',
+          duration: 2000
+        })
         // 获取设备Service信息
         wx.getBLEDeviceServices({
           deviceId: deviceId,
@@ -309,9 +322,12 @@ Page({
     })
   },
   disconnect: function (e) {
+    const {
+      deviceId
+    } = this.data
+
     // 断开已连接设备
     const that = this
-    const deviceId = e.currentTarget.dataset.id
     wx.closeBLEConnection({
       deviceId: deviceId,
       success: (res) => {
@@ -319,6 +335,11 @@ Page({
         // console.log(res)
         that.setData({
           isConnected: false,
+        })
+        wx.showToast({
+          title: '设备已断开连接',
+          icon: 'success',
+          duration: 2000
         })
       },
       fail: (err) => {
