@@ -44,6 +44,7 @@ Page({
       func4_selected: false
     })
     this.logMode()
+    this.write('0xDD,0x01,0x01,0x64,0x55')
   },
   func2: function () {
     this.setData({
@@ -363,22 +364,20 @@ Page({
       characteristicId: characteristicId_notify,
       state: true,
       success: res => {
-        if (isMonitoring) {
-          console.log('关闭监听成功', res)
-        } else {
-          console.log('开启监听成功', res)
-          // 监听低功耗蓝牙设备的特征值变化
-          wx.onBLECharacteristicValueChange(res => {
-            let wendu = that.buf2string(res.value).substr(0, 2)
-            let shidu = that.buf2string(res.value).substr(2, 2)
-            let abs = that.buf2string(res.value).substr(4, 6)
-            that.setData({
-              wendu: wendu,
-              shidu: shidu,
-              abs: abs,
-            })
-          })
-        };
+        console.log('开启监听成功', res)
+        // 监听蓝牙设备错误事件，包括异常断开等等
+        wx.onBLEConnectionStateChange(res => {
+          console.log(res)
+        })
+        // 监听低功耗蓝牙设备的特征值变化
+        wx.onBLECharacteristicValueChange(res => {
+          console.log(res)
+          // 将bufferArray类型转为string类型
+          console.log('接收到数据：' + that.buf2string(res.value))
+          // 因为buffer不能直接在console.log里输出，会显示null
+          var hex = that.ab2hex(res.value)
+          console.log(hex)
+        })
         that.setData({
           isMonitoring: true
         })
@@ -412,42 +411,22 @@ Page({
       }
     })
   },
-  write: function () {
-    // // 写入蓝牙数据
-    // const that = this
-    // const { deviceId, serviceId, characteristicId, isMonitoring, writeData } = this.data
-    // let buffer = that.hexStringToArrayBuffer("11");
-    // console.log("buff is", buffer);
-    // console.log('deviceid='+deviceId)
-    // console.log('serviceId='+serviceId)
-    // console.log('characteristicId='+characteristicId)
-    // wx.writeBLECharacteristicValue({
-    //   deviceId: deviceId,
-    //   serviceId: serviceId,
-    //   characteristicId: characteristicId,
-    //   value: buffer,
-    //   success: res => {
-    //     console.log('writeBLECharacteristicValue success', res.errMsg)
-    //   },
-    //   fail: err => {
-    //     console.log(err)
-    //   }
-    // })
-    let {
-      inputValue
-    } = this.data
-    this.onred(inputValue)
-  },
-
-  // 打开红灯
-  onred: function (e) {
+  write: function (e) {
     var that = this
+    let buffer = that.hexStringToArrayBuffer('100');
+    // let buffer = new ArrayBuffer(6)
+    // let dataView = new DataView(buffer)
+    // dataView.setUint8(4, 187)
+    // dataView.setUint8(5, 50)
 
-    // let buffer = that.hexStringToArrayBuffer(e);
-    let buffer = new ArrayBuffer(6)
-    let dataView = new DataView(buffer)
-    dataView.setUint8(4, 187)
-    dataView.setUint8(5, 50)
+    // 向蓝牙设备发送一个0x00的16进制数据
+    // let buffer = new ArrayBuffer(5)
+    // let dataView = new DataView(buffer)
+    // dataView.setUint8(0, 221)
+    // dataView.setUint8(1, 1)
+    // dataView.setUint8(2, 1)
+    // dataView.setUint8(3, 100)
+    // dataView.setUint8(4, 85)
 
     console.log("buff is", buffer);
     if (that.data.isConnected) {
@@ -455,7 +434,7 @@ Page({
       wx.writeBLECharacteristicValue({
         deviceId: that.data.deviceId,
         serviceId: that.data.serviceId,
-        characteristicId: that.data.characteristicId,
+        characteristicId: that.data.characteristicId_sender,
         value: buffer,
         success: function (res) {
           console.log('发送成功')
@@ -464,7 +443,6 @@ Page({
           console.log(err)
         }
       })
-
     } else {
       wx.showModal({
         title: '提示',
@@ -472,7 +450,7 @@ Page({
         showCancel: false,
         success: function (res) {
           that.setData({
-            searching: false
+            isConnected: false
           })
         }
       })
