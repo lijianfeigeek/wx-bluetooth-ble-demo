@@ -368,6 +368,16 @@ Page({
         // 监听蓝牙设备错误事件，包括异常断开等等
         wx.onBLEConnectionStateChange(res => {
           console.log(res)
+          that.setData({
+            isConnected: res.connected,
+          })
+          if (res.connected === false) {
+            wx.showToast({
+              title: '设备已断开连接',
+              icon: 'success',
+              duration: 2000
+            })
+          } 
         })
         // 监听低功耗蓝牙设备的特征值变化
         wx.onBLECharacteristicValueChange(res => {
@@ -390,30 +400,9 @@ Page({
       }
     })
   },
-  read: function () {
-    // 读取蓝牙数据
-    const that = this
-    const {
-      deviceId,
-      serviceId,
-      characteristicId,
-      isMonitoring
-    } = this.data
-    wx.readBLECharacteristicValue({
-      deviceId: deviceId,
-      serviceId: serviceId,
-      characteristicId: characteristicId,
-      success: res => {
-        console.log(res)
-      },
-      fail: err => {
-        console.log(err)
-      }
-    })
-  },
   write: function (e) {
     var that = this
-    let buffer = that.hexStringToArrayBuffer('100');
+    let buffer = that.hexStringToArrayBuffer('ÝdU');
     // let buffer = new ArrayBuffer(6)
     // let dataView = new DataView(buffer)
     // dataView.setUint8(4, 187)
@@ -438,6 +427,7 @@ Page({
         value: buffer,
         success: function (res) {
           console.log('发送成功')
+          console.log(res)
         },
         fail: err => {
           console.log(err)
