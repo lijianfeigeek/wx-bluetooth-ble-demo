@@ -228,7 +228,7 @@ Page({
           // console.log('已发现设备列表',res)
           wx.onBluetoothDeviceFound(res => {
             // console.log(`lijianfei:${JSON.stringify(res)}`)
-            if (res.devices[0].name == 'AMY_000003') {
+            if (res.devices[0].name.search("AMY") != -1) {
               console.log('已发现设备列表', res)
               devices.push(res.devices[0])
             }
@@ -262,6 +262,7 @@ Page({
     let that = this
     let deviceId = e.currentTarget.dataset.name.deviceId
     let deviceName = e.currentTarget.dataset.name.name
+    let serviceId = e.currentTarget.dataset.name.advertisServiceUUIDs[0]
     console.log('deviceId', deviceId)
     wx.createBLEConnection({
       deviceId: deviceId,
@@ -272,6 +273,7 @@ Page({
         that.setData({
           isConnected: true,
           deviceId: deviceId,
+          serviceId: serviceId,
           deviceName: deviceName,
           scaning:false
         })
@@ -284,20 +286,15 @@ Page({
         wx.getBLEDeviceServices({
           deviceId: deviceId,
           success: (res) => {
-            console.log('Service信息', res)
-            const serviceId = res.services[1].uuid;
-            console.log('serviceId', serviceId)
-            that.setData({
-              serviceId: serviceId,
-            })
+            console.log('Service信息', res.services)
             // 获取设备Characteristic信息 (必须在获得serviceID之后)
             wx.getBLEDeviceCharacteristics({
               deviceId: deviceId,
               serviceId: serviceId,
               success: (res) => {
                 console.log('Characteristic信息', res)
-                const characteristicId_sender = res.characteristics[0].uuid
-                const characteristicId_notify = res.characteristics[1].uuid
+                const characteristicId_sender = res.characteristics[1].uuid
+                const characteristicId_notify = res.characteristics[0].uuid
                 console.log('characteristicId_sender', characteristicId_sender)
                 console.log('characteristicId_notify', characteristicId_notify)
                 that.setData({
@@ -402,7 +399,7 @@ Page({
   },
   write: function (e) {
     var that = this
-    let buffer = that.hexStringToArrayBuffer('ÝdU');
+    let buffer = that.hexStringToArrayBuffer('DD04010055');
     // let buffer = new ArrayBuffer(6)
     // let dataView = new DataView(buffer)
     // dataView.setUint8(4, 187)
