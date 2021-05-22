@@ -35,7 +35,8 @@ Page({
     characteristicId_sender:null,
     characteristicId_notify:null,
     isMonitoring:false,
-    power:100
+    power:100,
+    modelIsOpen:false
   },
   // 功能前置校验
   tipsConnect:function(){
@@ -52,7 +53,7 @@ Page({
   func1: function () {
     if(!this.tipsConnect()) return
     // 发送模式
-    this.write(command.zj_1)
+    this.write(command.zj_1())
     // 强度调整，停止
 
     // 加热调整，停止
@@ -68,7 +69,7 @@ Page({
   func2: function () {
     if(!this.tipsConnect()) return;
     // 发送模式
-    this.write(command.tn_2)
+    this.write(command.tn_2())
     // 强度调整，停止
     
     // 加热调整，停止
@@ -84,7 +85,7 @@ Page({
   func3: function () {
     if(!this.tipsConnect()) return;
     // 发送模式
-    this.write(command.qd_3)
+    this.write(command.qd_3())
     // 强度调整，停止
     
     // 加热调整，停止
@@ -101,7 +102,7 @@ Page({
     if(!this.tipsConnect()) return;
 
     // 发送模式
-    this.write(command.gs_4)
+    this.write(command.gs_4())
     // 强度调整，停止
     
     // 加热调整，停止
@@ -173,15 +174,22 @@ Page({
     console.log('舒缓模式是否打开' + this.data.func4_selected)
     // 当前模式开关
     if(this.data.func1_selected || this.data.func2_selected || this.data.func3_selected ||this.data.func4_selected){
-      this.write(command.open)
+      if(!this.data.modelIsOpen){
+        this.write(command.open())
+        this.setData({
+          modelIsOpen:true
+        })
+      }
     }else{
       // 关闭
-      this.write(command.cloes)
+      this.write(command.cloes())
+      this.setData({
+        modelIsOpen:false
+      })
       // 关闭强度
       // 关闭加热
     }
   },
-
   gearAdd:function () {
     let gear = this.data.gear
     if (gear<9) {
@@ -358,6 +366,7 @@ Page({
                   characteristicId_notify: characteristicId_notify
                 })
                 that.notify()
+                that.write(command.base)
               },
               fail: err => {
                 console.log(err)
@@ -450,13 +459,17 @@ Page({
           console.log(hex)
           if(hex.search("cc0208") != -1){
             var openAndClose = hex.substr(6,2)
-            console.log(openAndClose)
+            console.log('设置模式开关:'+openAndClose)
             var model = hex.substr(8,2)
-            console.log(model)
+            console.log('设置模式:'+model)
             var gear= hex.substr(10,2)
-            console.log(gear)
+            console.log('设置档位:'+gear)
             var hot = hex.substr(12,2)
-            console.log(hot)
+            console.log('设置热度:'+hot)
+            var modelTime = hex.substr(16,2)
+            console.log('设置模式时间:'+modelTime)
+            var hotTime = hex.substr(20,2)
+            console.log('设置热度时间:'+hotTime)
           }
           if(hex.search("cc0101") != -1){// 获取电量
             var power = parseInt(hex.substr(6,2), 16)
@@ -478,23 +491,38 @@ Page({
     })
   },
   write: function (e) {
+    console.log('write:'+e)
     var that = this
     let buffer = that.hexStringToArrayBuffer(e);
+    let pos = 0;
+    let bytes = buffer.byteLength;
     if (that.data.isConnected) {
-      //写入数据
-      wx.writeBLECharacteristicValue({
-        deviceId: that.data.deviceId,
-        serviceId: that.data.serviceId,
-        characteristicId: that.data.characteristicId_sender,
-        value: buffer,
-        success: function (res) {
-          console.log('发送成功')
-          console.log(res)
-        },
-        fail: err => {
-          console.log(err)
+      while(bytes > 0) {
+        let tmpBuffer;
+        if(bytes > 20) {
+          tmpBuffer = buffer.slice(pos, pos + 20);
+          pos += 20;
+          bytes -= 20;
+        } else {
+          tmpBuffer = buffer.slice(pos, pos + bytes);
+          pos += bytes;
+          bytes -= bytes;
         }
-      })
+        //写入数据
+        wx.writeBLECharacteristicValue({
+          deviceId: that.data.deviceId,
+          serviceId: that.data.serviceId,
+          characteristicId: that.data.characteristicId_sender,
+          value: tmpBuffer,
+          success: function (res) {
+            console.log('发送成功')
+            console.log(res)
+          },
+          fail: err => {
+            console.log(err)
+          }
+        })
+      }
     } else {
       wx.showModal({
         title: '提示',

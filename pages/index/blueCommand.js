@@ -1,19 +1,72 @@
-// 关机
-var shutdown = 'DD04010055'
 // 获取当前电量
 var getPower = 'DD01016455'
+// 关机
+var shutdown = 'DD04010055'
+// 基础命令
+var base = 'DD0208000000000000000055'
+var now = 'DD0208000000000000000055'
 // 当前模式开
-var open = 'DD0208010055'
+var open = function(){
+  let arr = now.split('')
+  let len = arr.length
+  for (let index = 0; index < len; index++) {
+    if(index === 7) arr[index] = '1'
+    if(index === 16) arr[index] = '6'
+    if(index === 17) arr[index] = '4'
+    if(index === 20) arr[index] = '6'
+    if(index === 21) arr[index] = '4'
+  }
+  return now = arr.join('')
+}
 // 当前模式关
-var cloes = 'DD0208010155'
+var cloes = function(){
+  let arr = now.split('')
+  let len = arr.length
+  for (let index = 0; index < len; index++) {
+    if(index === 7) arr[index] = '0'
+    if(index === 16) arr[index] = '0'
+    if(index === 17) arr[index] = '0'
+    if(index === 20) arr[index] = '0'
+    if(index === 21) arr[index] = '0'
+  }
+  return now = arr.join('')
+}
 // 针灸模式
-var zj_1 = 'DD0208020155'
+var zj_1 = function(){
+  let arr = now.split('')
+  let len = arr.length
+  for (let index = 0; index < len; index++) {
+    if(index === 9) arr[index] = '1'
+  }
+  return now = arr.join('')
+}
 // 推拿模式
-var tn_2 = 'DD0208020255'
+var tn_2 = function(){
+  let arr = now.split('')
+  let len = arr.length
+  for (let index = 0; index < len; index++) {
+    if(index === 9) arr[index] = '2'
+  }
+  return now = arr.join('')
+}
 // 敲打模式
-var qd_3 = 'DD0208020355'
+var qd_3 = function(){
+  let arr = now.split('')
+  let len = arr.length
+  for (let index = 0; index < len; index++) {
+    if(index === 9) arr[index] = '3'
+  }
+  return now = arr.join('')
+}
 // 刮痧模式
-var gs_4 = 'DD0208020455'
+var gs_4 = function(){
+  let arr = now.split('')
+  let len = arr.length
+  for (let index = 0; index < len; index++) {
+    if(index === 9) arr[index] = '1'
+  }
+  return now = arr.join('')
+}
 // 当前强度控制
 
 // 当前热度控制
@@ -21,6 +74,8 @@ var gs_4 = 'DD0208020455'
 module.exports = {
   shutdown,
   getPower,
+  base,
+  now,
   open,
   cloes,
   zj_1,
