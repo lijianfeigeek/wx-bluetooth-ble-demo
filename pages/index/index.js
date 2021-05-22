@@ -375,6 +375,16 @@ Page({
       }
     })
   },
+  disconnectSetData:function(){
+    this.setData({
+      isConnected: false,
+      func1_selected:false,
+      func2_selected:false,
+      func3_selected:false,
+      func4_selected:false,
+      power:100
+    })
+  },
   disconnect: function (e) {
     const {
       deviceId
@@ -387,14 +397,7 @@ Page({
       success: (res) => {
         console.log('设备已断开连接')
         // console.log(res)
-        that.setData({
-          isConnected: false,
-          func1_selected:false,
-          func2_selected:false,
-          func3_selected:false,
-          func4_selected:false,
-          power:100
-        })
+        that.disconnectSetData();
         wx.showToast({
           title: '设备已断开连接',
           icon: 'success',
@@ -432,6 +435,7 @@ Page({
             isConnected: res.connected,
           })
           if (res.connected === false) {
+            that.disconnectSetData();
             wx.showToast({
               title: '设备已断开连接',
               icon: 'success',
@@ -444,6 +448,16 @@ Page({
           console.log(res)
           var hex = that.ab2hex(res.value)
           console.log(hex)
+          if(hex.search("cc0208") != -1){
+            var openAndClose = hex.substr(6,2)
+            console.log(openAndClose)
+            var model = hex.substr(8,2)
+            console.log(model)
+            var gear= hex.substr(10,2)
+            console.log(gear)
+            var hot = hex.substr(12,2)
+            console.log(hot)
+          }
           if(hex.search("cc0101") != -1){// 获取电量
             var power = parseInt(hex.substr(6,2), 16)
             that.setData({
