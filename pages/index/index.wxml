@@ -34,7 +34,7 @@
       <view class="powerAndBuleInView">
         <view class="powerView" >
           <text class="powerTitle">剩余电量</text>
-          <text class="power">100%</text>
+          <text class="power">{{power}}%</text>
         </view>
         <view class="buleView" >
           <text class="buleTitle">蓝牙连接</text>

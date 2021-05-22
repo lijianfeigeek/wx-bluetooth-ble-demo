@@ -2,6 +2,7 @@
 //获取应用实例
 var gearBase64 = require('./gearBase64')
 var hotArray = require('./hotImage')
+var command = require('./blueCommand')
 Page({
   data: {
     func1_selected: false,
@@ -33,7 +34,8 @@ Page({
     serviceId:null,
     characteristicId_sender:null,
     characteristicId_notify:null,
-    isMonitoring:false
+    isMonitoring:false,
+    power:100
   },
   // 交互事件函数
   func1: function () {
@@ -44,7 +46,6 @@ Page({
       func4_selected: false
     })
     this.logMode()
-    this.write('0xDD,0x01,0x01,0x64,0x55')
   },
   func2: function () {
     this.setData({
@@ -127,6 +128,7 @@ Page({
     console.log('轻享模式是否打开' + this.data.func2_selected)
     console.log('敲打模式是否打开' + this.data.func3_selected)
     console.log('舒缓模式是否打开' + this.data.func4_selected)
+    this.write(command.getPower)
   },
 
   gearAdd:function () {
@@ -362,6 +364,8 @@ Page({
       state: true,
       success: res => {
         console.log('开启监听成功', res)
+        // 获取电量
+        this.write(command.getPower)
         // 监听蓝牙设备错误事件，包括异常断开等等
         wx.onBLEConnectionStateChange(res => {
           console.log(res)
@@ -379,11 +383,14 @@ Page({
         // 监听低功耗蓝牙设备的特征值变化
         wx.onBLECharacteristicValueChange(res => {
           console.log(res)
-          // 将bufferArray类型转为string类型
-          console.log('接收到数据：' + that.buf2string(res.value))
-          // 因为buffer不能直接在console.log里输出，会显示null
           var hex = that.ab2hex(res.value)
           console.log(hex)
+          if(hex.search("cc0101") != -1){// 获取电量
+            var power = parseInt(hex.substr(6,2), 16)
+            that.setData({
+              power: power
+            })
+          }
         })
         that.setData({
           isMonitoring: true
@@ -399,22 +406,7 @@ Page({
   },
   write: function (e) {
     var that = this
-    let buffer = that.hexStringToArrayBuffer('DD04010055');
-    // let buffer = new ArrayBuffer(6)
-    // let dataView = new DataView(buffer)
-    // dataView.setUint8(4, 187)
-    // dataView.setUint8(5, 50)
-
-    // 向蓝牙设备发送一个0x00的16进制数据
-    // let buffer = new ArrayBuffer(5)
-    // let dataView = new DataView(buffer)
-    // dataView.setUint8(0, 221)
-    // dataView.setUint8(1, 1)
-    // dataView.setUint8(2, 1)
-    // dataView.setUint8(3, 100)
-    // dataView.setUint8(4, 85)
-
-    console.log("buff is", buffer);
+    let buffer = that.hexStringToArrayBuffer(e);
     if (that.data.isConnected) {
       //写入数据
       wx.writeBLECharacteristicValue({
