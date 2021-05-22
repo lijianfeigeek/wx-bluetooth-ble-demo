@@ -37,8 +37,26 @@ Page({
     isMonitoring:false,
     power:100
   },
+  // 功能前置校验
+  tipsConnect:function(){
+    if(!this.data.isConnected){
+      wx.showModal({
+        title: '提示',
+        content: '蓝牙未连接',
+        showCancel: false,
+      })
+    }
+    return this.data.isConnected;
+  },
   // 交互事件函数
   func1: function () {
+    if(!this.tipsConnect()) return
+    // 发送模式
+    this.write(command.zj_1)
+    // 强度调整，停止
+
+    // 加热调整，停止
+
     this.setData({
       func1_selected: !this.data.func1_selected,
       func2_selected: false,
@@ -48,6 +66,13 @@ Page({
     this.logMode()
   },
   func2: function () {
+    if(!this.tipsConnect()) return;
+    // 发送模式
+    this.write(command.tn_2)
+    // 强度调整，停止
+    
+    // 加热调整，停止
+
     this.setData({
       func1_selected: false,
       func2_selected: !this.data.func2_selected,
@@ -57,6 +82,13 @@ Page({
     this.logMode()
   },
   func3: function () {
+    if(!this.tipsConnect()) return;
+    // 发送模式
+    this.write(command.qd_3)
+    // 强度调整，停止
+    
+    // 加热调整，停止
+    
     this.setData({
       func1_selected: false,
       func2_selected: false,
@@ -66,6 +98,14 @@ Page({
     this.logMode()
   },
   func4: function () {
+    if(!this.tipsConnect()) return;
+
+    // 发送模式
+    this.write(command.gs_4)
+    // 强度调整，停止
+    
+    // 加热调整，停止
+    
     this.setData({
       func1_selected: false,
       func2_selected: false,
@@ -75,6 +115,7 @@ Page({
     this.logMode()
   },
   func5: function () {
+    if(!this.tipsConnect()) return;
     let hot = this.data.hot
     hot = 0
     this.setData({
@@ -84,6 +125,7 @@ Page({
     })
   },
   hotSub:function(){
+    if(!this.tipsConnect()) return;
     if(this.data.func5_selected == true){
       let hot = this.data.hot
       if (hot>0) {
@@ -104,6 +146,7 @@ Page({
     }
   },
   hotAdd:function(){
+    if(!this.tipsConnect()) return;
     if(this.data.func5_selected == true){
       let hot = this.data.hot
       if (hot<3) {
@@ -128,7 +171,15 @@ Page({
     console.log('轻享模式是否打开' + this.data.func2_selected)
     console.log('敲打模式是否打开' + this.data.func3_selected)
     console.log('舒缓模式是否打开' + this.data.func4_selected)
-    this.write(command.getPower)
+    // 当前模式开关
+    if(this.data.func1_selected || this.data.func2_selected || this.data.func3_selected ||this.data.func4_selected){
+      this.write(command.open)
+    }else{
+      // 关闭
+      this.write(command.cloes)
+      // 关闭强度
+      // 关闭加热
+    }
   },
 
   gearAdd:function () {
@@ -151,13 +202,16 @@ Page({
       })
     }
   },
-
+  getPower:function(e){
+    this.write(command.getPower)
+  },
   setBuleConnet:function(e){
     const {
       isConnected
     } = this.data
 
     if (isConnected) {
+      // this.write(command.shutdown)
       this.disconnect(e)
     } else {
       this.initBlue()
@@ -335,6 +389,11 @@ Page({
         // console.log(res)
         that.setData({
           isConnected: false,
+          func1_selected:false,
+          func2_selected:false,
+          func3_selected:false,
+          func4_selected:false,
+          power:100
         })
         wx.showToast({
           title: '设备已断开连接',
