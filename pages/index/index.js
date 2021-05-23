@@ -73,7 +73,11 @@ Page({
       func1_selected: !this.data.func1_selected,
       func2_selected: false,
       func3_selected: false,
-      func4_selected: false
+      func4_selected: false,
+      hot:0,
+      hotImageNow:hotArray.hot[0],
+      gear:0,
+      gearImageNow: gearBase64.gear[0],
     })
     this.logMode()
   },
@@ -89,7 +93,11 @@ Page({
       func1_selected: false,
       func2_selected: !this.data.func2_selected,
       func3_selected: false,
-      func4_selected: false
+      func4_selected: false,
+      hot:0,
+      hotImageNow:hotArray.hot[0],
+      gear:0,
+      gearImageNow: gearBase64.gear[0],
     })
     this.logMode()
   },
@@ -105,7 +113,11 @@ Page({
       func1_selected: false,
       func2_selected: false,
       func3_selected: !this.data.func3_selected,
-      func4_selected: false
+      func4_selected: false,
+      hot:0,
+      hotImageNow:hotArray.hot[0],
+      gear:0,
+      gearImageNow: gearBase64.gear[0],
     })
     this.logMode()
   },
@@ -122,7 +134,11 @@ Page({
       func1_selected: false,
       func2_selected: false,
       func3_selected: false,
-      func4_selected: !this.data.func4_selected
+      func4_selected: !this.data.func4_selected,
+      hot:0,
+      hotImageNow:hotArray.hot[0],
+      gear:0,
+      gearImageNow: gearBase64.gear[0],
     })
     this.logMode()
   },
@@ -196,11 +212,11 @@ Page({
       }
     }else{
       // 关闭
-      this.write(command.cloes())
+      this.write(command.base)
       this.setData({
         modelIsOpen:false
       })
-      this.disconnectSetData()
+      this.modleNotSelected()
       // 关闭强度
       // 关闭加热
     }
@@ -406,9 +422,21 @@ Page({
       }
     })
   },
+  modleNotSelected:function(){
+    this.setData({
+      func1_selected:false,
+      func2_selected:false,
+      func3_selected:false,
+      func4_selected:false,
+      func5_selected:false,
+      hot:0,
+      hotImageNow:hotArray.hot[0],
+      gear:0,
+      gearImageNow: gearBase64.gear[0],
+    })
+  },
   disconnectSetData:function(){
     this.setData({
-      isConnected: false,
       func1_selected:false,
       func2_selected:false,
       func3_selected:false,
@@ -466,11 +494,12 @@ Page({
         this.write(command.getPower)
         // 监听蓝牙设备错误事件，包括异常断开等等
         wx.onBLEConnectionStateChange(res => {
+          console.log('蓝牙设备错误事件:')
           console.log(res)
           that.setData({
             isConnected: res.connected,
           })
-          if (res.connected === false) {
+          if (res.connected == false) {
             that.disconnectSetData();
             wx.showToast({
               title: '设备已断开连接',

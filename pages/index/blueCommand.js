@@ -24,6 +24,9 @@ var cloes = function(){
   let len = arr.length
   for (let index = 0; index < len; index++) {
     if(index === 7) arr[index] = '0'
+    if(index === 9) arr[index] = '0'
+    if(index === 11) arr[index] = '0'
+    if(index === 13) arr[index] = '0'
     if(index === 16) arr[index] = '0'
     if(index === 17) arr[index] = '0'
     if(index === 20) arr[index] = '0'
@@ -37,6 +40,8 @@ var zj_1 = function(){
   let len = arr.length
   for (let index = 0; index < len; index++) {
     if(index === 9) arr[index] = '1'
+    if(index === 11) arr[index] = '0'
+    if(index === 13) arr[index] = '0'
   }
   return now = arr.join('')
 }
@@ -46,6 +51,8 @@ var tn_2 = function(){
   let len = arr.length
   for (let index = 0; index < len; index++) {
     if(index === 9) arr[index] = '2'
+    if(index === 11) arr[index] = '0'
+    if(index === 13) arr[index] = '0'
   }
   return now = arr.join('')
 }
@@ -55,6 +62,8 @@ var qd_3 = function(){
   let len = arr.length
   for (let index = 0; index < len; index++) {
     if(index === 9) arr[index] = '3'
+    if(index === 11) arr[index] = '0'
+    if(index === 13) arr[index] = '0'
   }
   return now = arr.join('')
 }
@@ -63,7 +72,9 @@ var gs_4 = function(){
   let arr = now.split('')
   let len = arr.length
   for (let index = 0; index < len; index++) {
-    if(index === 9) arr[index] = '1'
+    if(index === 9) arr[index] = '4'
+    if(index === 11) arr[index] = '0'
+    if(index === 13) arr[index] = '0'
   }
   return now = arr.join('')
 }
