@@ -49,6 +49,17 @@ Page({
     }
     return this.data.isConnected;
   },
+  modelSelected:function(){
+    if(this.data.func1_selected || this.data.func2_selected || this.data.func3_selected ||this.data.func4_selected){
+      return true
+    }
+    wx.showModal({
+      title: '提示',
+      content: '模式未选择',
+      showCancel: false,
+    })
+    return false
+  },
   // 交互事件函数
   func1: function () {
     if(!this.tipsConnect()) return
@@ -116,7 +127,8 @@ Page({
     this.logMode()
   },
   func5: function () {
-    if(!this.tipsConnect()) return;
+    if(!this.tipsConnect()) return
+    if(!this.modelSelected()) return
     let hot = this.data.hot
     hot = 0
     this.setData({
@@ -131,6 +143,7 @@ Page({
       let hot = this.data.hot
       if (hot>0) {
         hot--
+        this.write(command.hot(hot.toString()))
         this.setData({
           hot:hot,
           hotImageNow:hotArray.hot[hot]
@@ -152,6 +165,7 @@ Page({
       let hot = this.data.hot
       if (hot<3) {
         hot++
+        this.write(command.hot(hot.toString()))
         this.setData({
           hot:hot,
           hotImageNow:hotArray.hot[hot]
@@ -186,14 +200,18 @@ Page({
       this.setData({
         modelIsOpen:false
       })
+      this.disconnectSetData()
       // 关闭强度
       // 关闭加热
     }
   },
   gearAdd:function () {
+    if(!this.tipsConnect()) return
+    if(!this.modelSelected()) return
     let gear = this.data.gear
     if (gear<9) {
       gear++
+      this.write(command.gear(gear.toString()))
       this.setData({
         gear:gear,
         gearImageNow:gearBase64.gear[gear]
@@ -201,9 +219,12 @@ Page({
     }
   },
   gearSub:function () {
+    if(!this.tipsConnect()) return
+    if(!this.modelSelected()) return
     let gear = this.data.gear
     if (gear>0) {
       gear--
+      this.write(command.gear(gear.toString()))
       this.setData({
         gear:gear,
         gearImageNow:gearBase64.gear[gear]
@@ -211,6 +232,7 @@ Page({
     }
   },
   getPower:function(e){
+    if(!this.tipsConnect()) return;
     this.write(command.getPower)
   },
   setBuleConnet:function(e){
@@ -391,6 +413,11 @@ Page({
       func2_selected:false,
       func3_selected:false,
       func4_selected:false,
+      func5_selected:false,
+      hot:0,
+      hotImageNow:hotArray.hot[0],
+      gear:0,
+      gearImageNow: gearBase64.gear[0],
       power:100
     })
   },

@@ -68,8 +68,24 @@ var gs_4 = function(){
   return now = arr.join('')
 }
 // 当前强度控制
+var gear = function(e){
+  let arr = now.split('')
+  let len = arr.length
+  for (let index = 0; index < len; index++) {
+    if(index === 11) arr[index] = e
+  }
+  return now = arr.join('')
+}
 
 // 当前热度控制
+var hot = function(e){
+  let arr = now.split('')
+  let len = arr.length
+  for (let index = 0; index < len; index++) {
+    if(index === 13) arr[index] = e
+  }
+  return now = arr.join('')
+}
 
 module.exports = {
   shutdown,
@@ -81,5 +97,7 @@ module.exports = {
   zj_1,
   tn_2,
   qd_3,
-  gs_4
+  gs_4,
+  gear,
+  hot
 }
