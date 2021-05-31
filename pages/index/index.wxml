@@ -21,7 +21,7 @@
         <image class="hotGearImage" src="{{hotImageNow}}"></image>
       </view>
      </view>
-    <view class="titleView">
+    <view class="titleView2">
       <image class="subTitleImage" src="../../images/titleImage/9gearTitle.png"></image>
     </view>
     <view class="imageGearView">
@@ -41,6 +41,8 @@
           <image class="buleImage" bindtap="setBuleConnet" src="{{isConnected?bule_image_HL:bule_image}}"></image>
         </view>
       </view>
+    </view>
+    <view class="blank">
     </view>
   </scroll-view>
   <action-sheet hidden="{{!scaning}}" bindchange="actionSheetChange">
