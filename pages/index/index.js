@@ -186,6 +186,9 @@ Page({
           hot:hot,
           hotImageNow:hotArray.hot[hot]
         })
+      }else{
+        let hot = this.data.hot
+        this.write(command.hot(hot.toString()))
       }
     }
     else{
@@ -232,6 +235,9 @@ Page({
         gear:gear,
         gearImageNow:gearBase64.gear[gear]
       })
+    }else{
+      let gear = this.data.gear
+      this.write(command.gear(gear.toString()))
     }
   },
   gearSub:function () {
@@ -245,6 +251,8 @@ Page({
         gear:gear,
         gearImageNow:gearBase64.gear[gear]
       })
+    }else{
+      this.write(command.gear(gear.toString()))
     }
   },
   getPower:function(e){
