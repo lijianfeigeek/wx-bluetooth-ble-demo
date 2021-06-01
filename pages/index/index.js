@@ -555,38 +555,28 @@ Page({
     })
   },
   write: function (e) {
+    const that = this
     console.log('write:'+e)
-    var that = this
-    let buffer = that.hexStringToArrayBuffer(e);
-    let pos = 0;
-    let bytes = buffer.byteLength;
+    var buf = new ArrayBuffer(e.length);
+    var dataView = new DataView(buf);
+    e.forEach(function (item, index) {
+      dataView.setUint8(index, item);
+    });
     if (that.data.isConnected) {
-      while(bytes > 0) {
-        let tmpBuffer;
-        if(bytes > 20) {
-          tmpBuffer = buffer.slice(pos, pos + 20);
-          pos += 20;
-          bytes -= 20;
-        } else {
-          tmpBuffer = buffer.slice(pos, pos + bytes);
-          pos += bytes;
-          bytes -= bytes;
+      //写入数据
+      wx.writeBLECharacteristicValue({
+        deviceId: that.data.deviceId,
+        serviceId: that.data.serviceId,
+        characteristicId: that.data.characteristicId_sender,
+        value: buf,
+        success: function (res) {
+          console.log('发送成功')
+          console.log(res)
+        },
+        fail: err => {
+          console.log(err)
         }
-        //写入数据
-        wx.writeBLECharacteristicValue({
-          deviceId: that.data.deviceId,
-          serviceId: that.data.serviceId,
-          characteristicId: that.data.characteristicId_sender,
-          value: tmpBuffer,
-          success: function (res) {
-            console.log('发送成功')
-            console.log(res)
-          },
-          fail: err => {
-            console.log(err)
-          }
-        })
-      }
+      })
     } else {
       wx.showModal({
         title: '提示',
