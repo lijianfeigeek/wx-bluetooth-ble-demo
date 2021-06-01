@@ -5,97 +5,88 @@ var shutdown = [0xDD,0x04,0x01,0x00,0x55] //'DD04010055'
 // 基础命令
 var base = [0xDD,0x02,0x08,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x55]  //'DD0208000000000000000055'
 var now =  [0xDD,0x02,0x08,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x55]  //'DD0208000000000000000055'
+// 3开关
+// 4模式
+// 5档位
+// 6热度
+// 8模式时间
+// 10加热时间
 // 当前模式开
 var open = function(){
-  let arr = now.split('')
-  let len = arr.length
+  let len = now.length
   for (let index = 0; index < len; index++) {
-    if(index === 7) arr[index] = '1'
-    if(index === 16) arr[index] = '6'
-    if(index === 17) arr[index] = '4'
-    if(index === 20) arr[index] = '6'
-    if(index === 21) arr[index] = '4'
+    if(index === 3) now[index] = 0x01
+    if(index === 8) now[index] = 0x64
+    if(index === 10) now[index] = 0x64
   }
-  return now = arr.join('')
+  return now
 }
 // 当前模式关
 var cloes = function(){
-  let arr = now.split('')
-  let len = arr.length
+  let len = now.length
   for (let index = 0; index < len; index++) {
-    if(index === 7) arr[index] = '0'
-    if(index === 9) arr[index] = '0'
-    if(index === 11) arr[index] = '0'
-    if(index === 13) arr[index] = '0'
-    if(index === 16) arr[index] = '0'
-    if(index === 17) arr[index] = '0'
-    if(index === 20) arr[index] = '0'
-    if(index === 21) arr[index] = '0'
+    if(index === 3) now[index] = 0x00
+    if(index === 8) now[index] = 0x64
+    if(index === 10) now[index] = 0x64
   }
-  return now = arr.join('')
+  return now
 }
 // 针灸模式
 var zj_1 = function(){
-  let arr = now.split('')
-  let len = arr.length
+  let len = now.length
   for (let index = 0; index < len; index++) {
-    if(index === 9) arr[index] = '1'
-    if(index === 11) arr[index] = '0'
-    if(index === 13) arr[index] = '0'
+    if(index === 4) now[index] = 0x01
+    if(index === 5) now[index] = 0x00
+    if(index === 6) now[index] = 0x00
   }
-  return now = arr.join('')
+  return now
 }
 // 推拿模式
 var tn_2 = function(){
-  let arr = now.split('')
-  let len = arr.length
+  let len = now.length
   for (let index = 0; index < len; index++) {
-    if(index === 9) arr[index] = '2'
-    if(index === 11) arr[index] = '0'
-    if(index === 13) arr[index] = '0'
+    if(index === 4) now[index] = 0x02
+    if(index === 5) now[index] = 0x00
+    if(index === 6) now[index] = 0x00
   }
-  return now = arr.join('')
+  return now
 }
 // 敲打模式
 var qd_3 = function(){
-  let arr = now.split('')
-  let len = arr.length
+  let len = now.length
   for (let index = 0; index < len; index++) {
-    if(index === 9) arr[index] = '3'
-    if(index === 11) arr[index] = '0'
-    if(index === 13) arr[index] = '0'
+    if(index === 4) now[index] = 0x03
+    if(index === 5) now[index] = 0x00
+    if(index === 6) now[index] = 0x00
   }
-  return now = arr.join('')
+  return now
 }
 // 刮痧模式
 var gs_4 = function(){
-  let arr = now.split('')
-  let len = arr.length
+  let len = now.length
   for (let index = 0; index < len; index++) {
-    if(index === 9) arr[index] = '4'
-    if(index === 11) arr[index] = '0'
-    if(index === 13) arr[index] = '0'
+    if(index === 4) now[index] = 0x04
+    if(index === 5) now[index] = 0x00
+    if(index === 6) now[index] = 0x00
   }
-  return now = arr.join('')
+  return now
 }
 // 当前强度控制
 var gear = function(e){
-  let arr = now.split('')
-  let len = arr.length
+  let len = now.length
   for (let index = 0; index < len; index++) {
-    if(index === 11) arr[index] = e
+    if(index === 5) now[index] = parseInt(e.toString(),16)
   }
-  return now = arr.join('')
+  return now
 }
 
 // 当前热度控制
 var hot = function(e){
-  let arr = now.split('')
-  let len = arr.length
+  let len = now.length
   for (let index = 0; index < len; index++) {
-    if(index === 13) arr[index] = e
+    if(index === 6) now[index] = parseInt(e.toString(),16)
   }
-  return now = arr.join('')
+  return now
 }
 
 module.exports = {
