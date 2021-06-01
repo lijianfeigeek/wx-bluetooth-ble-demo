@@ -215,7 +215,7 @@ Page({
       }
     }else{
       // 关闭
-      this.write(command.base)
+      this.write(command.cloes())
       this.setData({
         modelIsOpen:false
       })
@@ -412,7 +412,7 @@ Page({
                   characteristicId_notify: characteristicId_notify
                 })
                 that.notify()
-                that.write(command.base)
+                that.write(command.getCurrent)
               },
               fail: err => {
                 console.log(err)
@@ -521,19 +521,36 @@ Page({
           console.log(res)
           var hex = that.ab2hex(res.value)
           console.log(hex)
+          if(hex.search("cc0308") != -1){
+            var openAndClose = hex.substr(6,2)
+            console.log('设备控制-设置模式开关:'+openAndClose)
+            var model = hex.substr(8,2)
+            console.log('设备控制-设置模式:'+model)
+            var gear= hex.substr(10,2)
+            console.log('设备控制-设置档位:'+gear)
+            var hot = hex.substr(12,2)
+            console.log('设备控制-设置热度:'+hot)
+            // 同步到now
+            // 同步ui
+            
+            var modelTime = hex.substr(16,2)
+            console.log('设备控制-设置模式时间:'+modelTime)
+            var hotTime = hex.substr(20,2)
+            console.log('设备控制-设置热度时间:'+hotTime)
+          }
           if(hex.search("cc0208") != -1){
             var openAndClose = hex.substr(6,2)
-            console.log('设置模式开关:'+openAndClose)
+            console.log('蓝牙控制-设置模式开关:'+openAndClose)
             var model = hex.substr(8,2)
-            console.log('设置模式:'+model)
+            console.log('蓝牙控制-设置模式:'+model)
             var gear= hex.substr(10,2)
-            console.log('设置档位:'+gear)
+            console.log('蓝牙控制-设置档位:'+gear)
             var hot = hex.substr(12,2)
-            console.log('设置热度:'+hot)
+            console.log('蓝牙控制-设置热度:'+hot)
             var modelTime = hex.substr(16,2)
-            console.log('设置模式时间:'+modelTime)
+            console.log('蓝牙控制-设置模式时间:'+modelTime)
             var hotTime = hex.substr(20,2)
-            console.log('设置热度时间:'+hotTime)
+            console.log('蓝牙控制-设置热度时间:'+hotTime)
           }
           if(hex.search("cc0101") != -1){// 获取电量
             var power = parseInt(hex.substr(6,2), 16)
