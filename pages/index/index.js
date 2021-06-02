@@ -522,17 +522,54 @@ Page({
           var hex = that.ab2hex(res.value)
           console.log(hex)
           if(hex.search("cc0308") != -1){
-            var openAndClose = hex.substr(6,2)
+            var openAndClose = hex.substr(7,1)
+            if(openAndClose == '0'){
+              command.cloes()
+            }else{
+              command.open()
+            }
             console.log('设备控制-设置模式开关:'+openAndClose)
-            var model = hex.substr(8,2)
+            var model = hex.substr(9,1)
+            var func1_selected = false
+            var func2_selected = false
+            var func3_selected = false
+            var func4_selected = false
+            var func5_selected = false
+            if (model == '1') {
+              command.zj_1()
+              func1_selected = true
+            } else if(model == '2'){
+              command.tn_2()
+              func2_selected = true
+            } else if(model == '3'){
+              command.qd_3()
+              func3_selected = true
+            } else if(model == '4'){
+              command.gs_4()
+              func4_selected = true
+            }else{
+              command.no_model()
+            }
             console.log('设备控制-设置模式:'+model)
-            var gear= hex.substr(10,2)
+            var gear= hex.substr(11,1)
+            command.gear(gear)
             console.log('设备控制-设置档位:'+gear)
-            var hot = hex.substr(12,2)
+            var hot = hex.substr(13,1)
+            command.hot(hot)
+            if(hot !== '0') func5_selected = true
             console.log('设备控制-设置热度:'+hot)
-            // 同步到now
-            // 同步ui
-            
+            this.setData({
+              func1_selected:func1_selected,
+              func2_selected:func2_selected,
+              func3_selected:func3_selected,
+              func4_selected:func4_selected,
+              func5_selected:func5_selected,
+              hot:parseInt(hot, 10),
+              hotImageNow:hotArray.hot[parseInt(hot, 10)],
+              gear:parseInt(gear, 10),
+              gearImageNow: gearBase64.gear[parseInt(gear, 10)],
+            })
+
             var modelTime = hex.substr(16,2)
             console.log('设备控制-设置模式时间:'+modelTime)
             var hotTime = hex.substr(20,2)

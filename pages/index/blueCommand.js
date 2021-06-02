@@ -35,6 +35,15 @@ var cloes = function(){
   }
   return now
 }
+var no_model = function() {
+  let len = now.length
+  for (let index = 0; index < len; index++) {
+    if(index === 4) now[index] = 0x00
+    if(index === 5) now[index] = 0x00
+    if(index === 6) now[index] = 0x00
+  }
+  return now
+}
 // 针灸模式
 var zj_1 = function(){
   let len = now.length
@@ -100,6 +109,7 @@ module.exports = {
   now,
   open,
   cloes,
+  no_model,
   zj_1,
   tn_2,
   qd_3,
