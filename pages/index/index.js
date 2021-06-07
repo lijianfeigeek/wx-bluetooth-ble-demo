@@ -76,8 +76,8 @@ Page({
       func4_selected: false,
       hot:0,
       hotImageNow:hotArray.hot[0],
-      gear:0,
-      gearImageNow: gearBase64.gear[0],
+      gear:1,
+      gearImageNow: gearBase64.gear[1],
     })
     this.logMode()
   },
@@ -96,8 +96,8 @@ Page({
       func4_selected: false,
       hot:0,
       hotImageNow:hotArray.hot[0],
-      gear:0,
-      gearImageNow: gearBase64.gear[0],
+      gear:1,
+      gearImageNow: gearBase64.gear[1],
     })
     this.logMode()
   },
@@ -116,8 +116,8 @@ Page({
       func4_selected: false,
       hot:0,
       hotImageNow:hotArray.hot[0],
-      gear:0,
-      gearImageNow: gearBase64.gear[0],
+      gear:1,
+      gearImageNow: gearBase64.gear[1],
     })
     this.logMode()
   },
@@ -137,8 +137,8 @@ Page({
       func4_selected: !this.data.func4_selected,
       hot:0,
       hotImageNow:hotArray.hot[0],
-      gear:0,
-      gearImageNow: gearBase64.gear[0],
+      gear:1,
+      gearImageNow: gearBase64.gear[1],
     })
     this.logMode()
   },
