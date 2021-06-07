@@ -10,15 +10,19 @@ var now =  [0xDD,0x02,0x08,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x55]  //'DD0
 // 4模式
 // 5档位
 // 6热度
+// 7模式时间
 // 8模式时间
+// 9加热时间
 // 10加热时间
 // 当前模式开
 var open = function(){
   let len = now.length
   for (let index = 0; index < len; index++) {
     if(index === 3) now[index] = 0x01
-    if(index === 8) now[index] = 0x64
-    if(index === 10) now[index] = 0x64
+    if(index === 7) now[index] = 0x03
+    if(index === 8) now[index] = 0x84
+    if(index === 9) now[index] = 0x03
+    if(index === 10) now[index] = 0x84
   }
   return now
 }
@@ -30,7 +34,9 @@ var cloes = function(){
     if(index === 4) now[index] = 0x00
     if(index === 5) now[index] = 0x00
     if(index === 6) now[index] = 0x00
+    if(index === 7) now[index] = 0x00
     if(index === 8) now[index] = 0x00
+    if(index === 9) now[index] = 0x00
     if(index === 10) now[index] = 0x00
   }
   return now
@@ -49,7 +55,7 @@ var zj_1 = function(){
   let len = now.length
   for (let index = 0; index < len; index++) {
     if(index === 4) now[index] = 0x01
-    if(index === 5) now[index] = 0x00
+    if(index === 5) now[index] = 0x01
     if(index === 6) now[index] = 0x00
   }
   return now
@@ -59,7 +65,7 @@ var tn_2 = function(){
   let len = now.length
   for (let index = 0; index < len; index++) {
     if(index === 4) now[index] = 0x02
-    if(index === 5) now[index] = 0x00
+    if(index === 5) now[index] = 0x01
     if(index === 6) now[index] = 0x00
   }
   return now
@@ -69,7 +75,7 @@ var qd_3 = function(){
   let len = now.length
   for (let index = 0; index < len; index++) {
     if(index === 4) now[index] = 0x03
-    if(index === 5) now[index] = 0x00
+    if(index === 5) now[index] = 0x01
     if(index === 6) now[index] = 0x00
   }
   return now
@@ -79,7 +85,7 @@ var gs_4 = function(){
   let len = now.length
   for (let index = 0; index < len; index++) {
     if(index === 4) now[index] = 0x04
-    if(index === 5) now[index] = 0x00
+    if(index === 5) now[index] = 0x01
     if(index === 6) now[index] = 0x00
   }
   return now
