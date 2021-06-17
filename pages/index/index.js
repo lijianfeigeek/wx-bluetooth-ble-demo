@@ -17,7 +17,7 @@ Page({
     func4_selected: false,
     func4_image: "../../images/4modeImage/4.png",
     func4_image_HL: "../../images/4modeImage/4-4.png",
-    func5_selected: false,
+    func5_selected: true,
     func5_image: "../../images/hotModeImage/hot.png",
     func5_image_HL: "../../images/hotModeImage/hot_1.png",
     hot:0,
@@ -70,7 +70,7 @@ Page({
     // 加热调整，停止
 
     this.setData({
-      func1_selected: !this.data.func1_selected,
+      func1_selected: true,
       func2_selected: false,
       func3_selected: false,
       func4_selected: false,
@@ -91,7 +91,7 @@ Page({
 
     this.setData({
       func1_selected: false,
-      func2_selected: !this.data.func2_selected,
+      func2_selected: true,
       func3_selected: false,
       func4_selected: false,
       hot:0,
@@ -112,7 +112,7 @@ Page({
     this.setData({
       func1_selected: false,
       func2_selected: false,
-      func3_selected: !this.data.func3_selected,
+      func3_selected: true,
       func4_selected: false,
       hot:0,
       hotImageNow:hotArray.hot[0],
@@ -134,7 +134,7 @@ Page({
       func1_selected: false,
       func2_selected: false,
       func3_selected: false,
-      func4_selected: !this.data.func4_selected,
+      func4_selected: true,
       hot:0,
       hotImageNow:hotArray.hot[0],
       gear:1,
@@ -148,7 +148,7 @@ Page({
     let hot = this.data.hot
     hot = 0
     this.setData({
-      func5_selected: !this.data.func5_selected,
+      func5_selected: true,
       hot:hot,
       hotImageNow:hotArray.hot[hot]
     })
@@ -436,7 +436,7 @@ Page({
       func2_selected:false,
       func3_selected:false,
       func4_selected:false,
-      func5_selected:false,
+      func5_selected:true,
       hot:0,
       hotImageNow:hotArray.hot[0],
       gear:0,
@@ -449,7 +449,7 @@ Page({
       func2_selected:false,
       func3_selected:false,
       func4_selected:false,
-      func5_selected:false,
+      func5_selected:true,
       hot:0,
       hotImageNow:hotArray.hot[0],
       gear:0,
@@ -534,7 +534,7 @@ Page({
             var func2_selected = false
             var func3_selected = false
             var func4_selected = false
-            var func5_selected = false
+            var func5_selected = true
             if (model == '1') {
               command.zj_1()
               func1_selected = true
