@@ -74,8 +74,8 @@ Page({
       func2_selected: false,
       func3_selected: false,
       func4_selected: false,
-      hot:0,
-      hotImageNow:hotArray.hot[0],
+      // hot:0,
+      // hotImageNow:hotArray.hot[0],
       gear:1,
       gearImageNow: gearBase64.gear[1],
     })
@@ -94,8 +94,8 @@ Page({
       func2_selected: true,
       func3_selected: false,
       func4_selected: false,
-      hot:0,
-      hotImageNow:hotArray.hot[0],
+      // hot:0,
+      // hotImageNow:hotArray.hot[0],
       gear:1,
       gearImageNow: gearBase64.gear[1],
     })
@@ -114,8 +114,8 @@ Page({
       func2_selected: false,
       func3_selected: true,
       func4_selected: false,
-      hot:0,
-      hotImageNow:hotArray.hot[0],
+      // hot:0,
+      // hotImageNow:hotArray.hot[0],
       gear:1,
       gearImageNow: gearBase64.gear[1],
     })
@@ -135,8 +135,8 @@ Page({
       func2_selected: false,
       func3_selected: false,
       func4_selected: true,
-      hot:0,
-      hotImageNow:hotArray.hot[0],
+      // hot:0,
+      // hotImageNow:hotArray.hot[0],
       gear:1,
       gearImageNow: gearBase64.gear[1],
     })
