@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/main/main",
     "pages/index/index",
     "pages/logs/logs"
   ],
@@ -7,24 +8,7 @@
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "BLE-Demo",
-    "navigationBarTextStyle": "black",
-    "navigationStyle":"custom"
+    "navigationBarTextStyle": "black"
   },
-  "sitemapLocation": "sitemap.json",
-  "tabBar": {
-  "selectedColor":"#0091ff",
-    "list": [{
-        "pagePath": "pages/index/index",
-        "text": "功能选择",
-        "iconPath": "images/tabbarImage/1.png",
-        "selectedIconPath": "images/tabbarImage/1-1.png"
-      },
-      {
-        "pagePath": "pages/logs/logs",
-        "text": "小贴士",
-        "iconPath": "images/tabbarImage/2.png",
-        "selectedIconPath": "images/tabbarImage/2-2.png"
-      }
-    ]
-  }
+  "sitemapLocation": "sitemap.json"
 }

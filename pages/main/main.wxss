@@ -1,0 +1,84 @@
+/* pages/main/main.wxss */
+.viewNaviBar {
+  width:100%;
+  height:5vw;
+}
+.carouselView {
+  width:100%;
+  height:200px;
+  display:flex; 
+  justify-content: center;
+  align-items:center;
+}
+.carousel{
+  width: 100%;
+  height: 200px;
+}
+.carousel .carousel-image{
+  width: 100%;
+  height: 80%;
+  border-radius: 9rpx;
+}
+.carousel .quiet {
+  transform: scale(0.8333333);
+  transition: all 0.5s ease-in 0s;
+}
+.carousel .active {
+  transform: none;
+  transition: all 0.5s ease-in 0s;
+}
+.cell{
+  box-shadow:-10px 0px 10px #ffffff,   /*左边阴影*/
+                    0px -10px 10px #ffffff,  /*上边阴影*/
+                    10px 0px 10px #ffffff,  /*右边阴影*/
+                    0px 10px 10px #ffffff; /*下边阴影*/
+  border-radius: 25px;
+  background-color: black;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 30px;
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+}
+.word{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items:flex-start;
+}
+.tetle{
+  color:#ffffff;
+  font-size:larger;
+}
+.content{
+  color:#ffffff;
+  font-size:smaller;
+}
+.button{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  color:#ED62A7;
+  margin-right: 20px;
+}
+.img {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100px;
+  height: 100px;
+}
+
+.blank{
+  width:100%;
+  height:330px;
+}
+
+.view {
+  display:flex;
+  height:100%;
+  width:100%;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-image: url(http://qiniu.lijianfei.com/uPic/meilala_main_tiny.png);
+}

@@ -1,0 +1,29 @@
+
+<view>
+  <scroll-view class="view" scroll-y="ture">    
+    <view class="viewNaviBar"></view>
+    <view class="carouselView">
+      <swiper class="carousel" enable-flex="ture" indicator-dots="{{true}}"
+        autoplay="{{true}}" interval="{{3000}}" duration="{{1000}}" previous-margin="50px" next-margin="50px" circular="true" bindchange="swiperChange">
+        <swiper-item class="swiper-item" wx:key="unique" wx:for="{{carousel.imgs}}" wx:for-item="item">
+          <image src="{{item}}" class="carousel-image {{carousel.currentIndex == index ? 'active' : 'quiet'}}" mode="scaleToFill"/>
+        </swiper-item>
+      </swiper> 
+    </view>
+
+    <view wx:for="{{list}}" wx:key="index">
+      <view class="cell" wx:key="index">
+        <image class="img" src="{{item.img}}"></image>
+        <view class="word">
+          <text class="tetle">{{item.title}}</text>
+          <text class="content">按摩时间：15分钟</text>
+        </view>
+        <view class="button" bindtap="buttonTap" data-bean="{{item}}">
+          <text>立即进入</text>
+        </view>
+      </view>
+    </view>
+    <view class="blank">
+    </view>
+  </scroll-view>
+</view>
