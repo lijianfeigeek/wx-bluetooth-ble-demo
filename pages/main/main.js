@@ -21,7 +21,7 @@ Page({
       {
         img:'http://qiniu.lijianfei.com/uPic/meilala_mianmo_tiny.png',
         title:"智能面膜仪",
-        // path:'../logs/logs'
+        path:'../mianmo/mianmo'
       }
     ]
   },

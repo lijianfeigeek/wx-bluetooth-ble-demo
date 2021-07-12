@@ -1,0 +1,54 @@
+<view>
+  <scroll-view class="view" scroll-y="ture">
+    <view class="viewNaviBar"></view>
+    <view class="titleView">
+      <image class="titleImage" src="../../images/titleImage/5ModeTitle.png"></image>
+    </view>
+    <view class="view4func">
+      <image class="imageFunc1" bindtap="func1" src="{{func1_selected?func1_image_HL:func1_image}}"></image>
+      <image class="imageFunc2" bindtap="func2" src="{{func2_selected?func2_image_HL:func2_image}}"></image>
+      <image class="imageFunc3" bindtap="func3" src="{{func3_selected?func3_image_HL:func3_image}}"></image>
+      <image class="imageFunc4" bindtap="func4" src="{{func4_selected?func4_image_HL:func4_image}}"></image>
+    </view>
+    <view class="hotView">
+      <!-- <view class="hotViewRow_1">
+        <image class="addSubBtn" bindtap="hotSub" src="../../images/9gearImage/sub.png" ></image>
+        <image class="imageFunc5" bindtap="func5" src="{{func5_selected?func5_image_HL:func5_image}}"></image>
+        <image class="hotSubBtn" bindtap="hotAdd" src="../../images/9gearImage/add.png" ></image>
+      </view>
+      <view class="hotViewRow_2">
+        <image class="hotGearImage" src="{{hotImageNow}}"></image>
+      </view> -->
+     </view>
+    <view class="titleView2">
+      <image class="subTitleImage" src="../../images/titleImage/9gearTitle.png"></image>
+    </view>
+    <view class="imageGearView">
+      <view class="imageGear" style="background-repeat: no-repeat; background-size: 100% 100%; background-image: url('{{gearImageNow}}');">
+          <image class="gearSubBtn" bindtap="gearSub" src="../../images/9gearImage/sub.png" ></image>
+          <image class="gearAddBtn" bindtap="gearAdd" src="../../images/9gearImage/add.png" ></image>
+      </view>
+    </view>
+    <view class="powerAndBuleView">
+      <view class="powerAndBuleInView">
+        <view class="powerView" >
+          <text class="powerTitle">剩余电量</text>
+          <text class="power" bindtap="getPower">{{power}}%</text>
+        </view>
+        <view class="buleView" >
+          <text class="buleTitle"bindtap="setBuleConnet">蓝牙连接</text>
+          <image class="buleImage" bindtap="setBuleConnet" src="{{isConnected?bule_image_HL:bule_image}}"></image>
+        </view>
+      </view>
+    </view>
+    <view class="blank">
+    </view>
+  </scroll-view>
+  <action-sheet hidden="{{!scaning}}" bindchange="actionSheetChange">
+    <!-- <action-sheet-item class="item">搜到到的蓝牙设备</action-sheet-item> -->
+  <block wx:for="{{devices}}">
+    <action-sheet-item class="item" bindtap="bindItemTap" data-name="{{item}}">{{item.name}}</action-sheet-item>
+  </block>
+  <action-sheet-cancel class="cancel" bindtap="actionSheetCancel" >取消</action-sheet-cancel>
+</action-sheet>
+</view>
