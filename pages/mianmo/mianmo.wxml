@@ -2,7 +2,7 @@
   <scroll-view class="view" scroll-y="ture">
     <view class="viewNaviBar"></view>
     <view class="titleView">
-      <image class="titleImage" src="../../images/titleImage/5ModeTitle.png"></image>
+      <image class="titleImage" src="../../images/titleImage/4ModeTitle.png"></image>
     </view>
     <view class="view4func">
       <image class="imageFunc1" bindtap="func1" src="{{func1_selected?func1_image_HL:func1_image}}"></image>
