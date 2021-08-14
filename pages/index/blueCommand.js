@@ -56,7 +56,7 @@ var zj_1 = function(){
   for (let index = 0; index < len; index++) {
     if(index === 4) now[index] = 0x01
     if(index === 5) now[index] = 0x01
-    if(index === 6) now[index] = 0x00
+    // if(index === 6) now[index] = 0x00
   }
   return now
 }
@@ -66,7 +66,7 @@ var tn_2 = function(){
   for (let index = 0; index < len; index++) {
     if(index === 4) now[index] = 0x02
     if(index === 5) now[index] = 0x01
-    if(index === 6) now[index] = 0x00
+    // if(index === 6) now[index] = 0x00
   }
   return now
 }
@@ -76,7 +76,7 @@ var qd_3 = function(){
   for (let index = 0; index < len; index++) {
     if(index === 4) now[index] = 0x03
     if(index === 5) now[index] = 0x01
-    if(index === 6) now[index] = 0x00
+    // if(index === 6) now[index] = 0x00
   }
   return now
 }
@@ -86,7 +86,7 @@ var gs_4 = function(){
   for (let index = 0; index < len; index++) {
     if(index === 4) now[index] = 0x04
     if(index === 5) now[index] = 0x01
-    if(index === 6) now[index] = 0x00
+    // if(index === 6) now[index] = 0x00
   }
   return now
 }
